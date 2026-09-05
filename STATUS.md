@@ -21,6 +21,11 @@ Target: sketch.bundle.html (single generated HTML, ~10.4 MB). Git repo initializ
 | 12 | Runtime verification (headless CDP): clean boot, 0 exceptions, SketchApp live, 76 data-command btns, tab/panel/theme switching, report render emits .report-page, host hooks __exportState/__importState/__exportValidationState round-trip OK, screenshots in docs/qa-*.png | DONE 2026-09-05 |
 | 13 | Visual pass (vision QA on screenshots): 3 native-control defects found → fixed (dark selects, teal accent-color, no blue outlines) → re-verified clean | DONE 2026-09-05 |
 | 14 | Git commit 1b6f12b | DONE 2026-09-05 |
+| 15 | M2: tool shelf grouping (5 groups + separators), save-state pill in doc bar, Ctrl+K command palette (42 commands routed through existing executeCommand registry) | DONE 2026-09-05 |
+| 16 | M2 runtime verify: boot clean, palette open/filter/run/Esc/Ctrl+K pass, pill updates on rename; top-bar crop verified alignment; commits 56e890f | DONE 2026-09-05 |
+| 17 | M3 (next): left document navigator (pages/areas/layers), footer doc-nav relocation, inspector field-order audit | PENDING |
+| 18 | Phase 5: preference/storage migration tests, file-compat fixtures | PENDING |
+| 19 | Phase 6: full parity suite, performance baseline | PENDING |
 
 ## Notes / decisions
 - Never blind-replace "apex": escapeXml + geometric apex (curveApex etc.) + `urn:xmlns:apex:sketch:xml` (format contract) + `.apx/.skx` accept lists all stay. Justification in docs/INTERFACE_INVENTORY.md §2.
