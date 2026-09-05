@@ -2487,6 +2487,97 @@ button:focus-visible, [tabindex]:focus-visible, select:focus-visible, input:focu
 .app-dialog-actions button.primary:hover,
 .breakdown-actions button.primary:hover { filter: brightness(1.08); }
 
+/* ---------- pages navigator (M3) ---------- */
+.pages-nav {
+  width: 0;
+  overflow: hidden;
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  transition: width .16s ease;
+  visibility: hidden;
+}
+body.pages-nav-open .pages-nav {
+  width: 168px;
+  visibility: visible;
+}
+.pages-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 10px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  flex: none;
+}
+.pages-nav-close {
+  background: transparent; border: none; color: var(--text-muted);
+  cursor: pointer; font-size: 14px; padding: 2px 4px; border-radius: 4px;
+}
+.pages-nav-close:hover { color: var(--text-main); background: var(--bg-hover); }
+.pages-nav-list {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 0 6px 6px;
+}
+.page-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  margin-bottom: 2px;
+  border-radius: var(--radius-s);
+  font-size: 12px;
+  color: var(--text-main);
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.page-row:hover { background: var(--bg-hover); }
+.page-row.is-current {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+.page-row .page-row-label { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.page-row .page-row-ghost {
+  font-size: 10px; color: var(--text-muted);
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: 1px 5px; flex: none;
+}
+.page-row .page-row-ghost.on { color: var(--accent); border-color: var(--accent); }
+.page-row .page-row-del {
+  background: transparent; border: none; color: var(--text-muted);
+  cursor: pointer; font-size: 13px; padding: 2px; border-radius: 4px; flex: none;
+  display: none;
+}
+.page-row:hover .page-row-del { display: inline-flex; }
+.page-row .page-row-del:hover { color: #FC8181; }
+.page-row .page-row-del:disabled { opacity: .3; cursor: default; }
+.pages-nav-footer {
+  flex: none;
+  padding: 8px;
+  border-top: 1px solid var(--border);
+}
+.pages-nav-footer select {
+  width: 100%;
+  background: var(--bg-app);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+  font-size: 11.5px;
+  padding: 4px 6px;
+}
+body.pages-nav-open .tool-btn#tool-pages {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 /* ---------- native controls & panel selects ---------- */
 :root { color-scheme: dark; }
 body.light-theme { color-scheme: light; }
@@ -2778,6 +2869,115 @@ body.light-theme .command-palette-backdrop { background: rgba(40,50,60,.25); }
     })();
     </script>
 
+    <!-- Pages navigator module (M3). Delegates to addPage/deletePage/goToPage/
+         setUnderlay so behavior is identical to the footer controls. -->
+    <script>
+    (function () {
+      'use strict';
+      function app() { return window.app; }
+
+      function isOpen() { return document.body.classList.contains('pages-nav-open'); }
+      function setOpen(open) {
+        document.body.classList.toggle('pages-nav-open', Boolean(open));
+        var btn = document.getElementById('tool-pages');
+        if (btn) btn.setAttribute('aria-pressed', String(Boolean(open)));
+        setTimeout(function () { if (app() && app().canvas && app().canvas.resize) app().canvas.resize(); }, 180);
+      }
+
+      function render() {
+        var a = app();
+        var list = document.getElementById('pages-nav-list');
+        var underlay = document.getElementById('nav-underlay-select');
+        if (!a || !list) return;
+        list.innerHTML = '';
+        a.pages.forEach(function (page, index) {
+          var row = document.createElement('div');
+          row.className = 'page-row' + (index === a.currentPage ? ' is-current' : '');
+          row.setAttribute('role', 'listitem');
+          var label = document.createElement('span');
+          label.className = 'page-row-label';
+          label.textContent = 'Page ' + (index + 1);
+          row.appendChild(label);
+          if (index !== a.currentPage) {
+            var ghost = document.createElement('button');
+            ghost.className = 'page-row-ghost' + (a.underlayPageIndex === index ? ' on' : '');
+            ghost.title = 'Ghost this page beneath the current page (underlay)';
+            ghost.textContent = 'ghost';
+            ghost.addEventListener('click', function (e) {
+              e.stopPropagation();
+              a.setUnderlay(a.underlayPageIndex === index ? -1 : index);
+              render();
+            });
+            row.appendChild(ghost);
+            var del = document.createElement('button');
+            del.className = 'page-row-del';
+            del.title = 'Delete this page';
+            del.setAttribute('aria-label', 'Delete page ' + (index + 1));
+            del.innerHTML = '<i class="ph ph-trash"></i>';
+            del.addEventListener('click', function (e) {
+              e.stopPropagation();
+              if (a.pages.length <= 1) return;
+              // deletePage() removes the CURRENT page (with confirm dialog),
+              // so navigate to the clicked row's page first.
+              if (index !== a.currentPage) a.goToPage(index);
+              a.deletePage().then(function () { render(); });
+            });
+            row.appendChild(del);
+          } else {
+            var tag = document.createElement('span');
+            tag.className = 'page-row-ghost on';
+            tag.textContent = 'current';
+            row.appendChild(tag);
+          }
+          row.addEventListener('click', function () {
+            if (index !== a.currentPage) a.goToPage(index);
+            render();
+          });
+          list.appendChild(row);
+        });
+        // mirror of updatePageDisplay's underlay options
+        if (underlay) {
+          underlay.innerHTML = '';
+          var none = document.createElement('option');
+          none.value = '-1';
+          none.textContent = 'Underlay: None';
+          underlay.appendChild(none);
+          a.pages.forEach(function (_, index) {
+            if (index === a.currentPage) return;
+            var option = document.createElement('option');
+            option.value = String(index);
+            option.textContent = 'Page ' + (index + 1);
+            underlay.appendChild(option);
+          });
+          underlay.value = String(a.underlayPageIndex == null ? -1 : a.underlayPageIndex);
+        }
+      }
+
+      window.__pagesNavRefresh = render;
+
+      function boot() {
+        var toggle = document.getElementById('tool-pages');
+        if (toggle) toggle.addEventListener('click', function () { setOpen(!isOpen()); });
+        var close = document.getElementById('pages-nav-close');
+        if (close) close.addEventListener('click', function () { setOpen(false); });
+        var underlay = document.getElementById('nav-underlay-select');
+        if (underlay) underlay.addEventListener('change', function () {
+          app().setUnderlay(parseInt(underlay.value, 10));
+          render();
+        });
+        render();
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+      else boot();
+      // The app instantiates on window load (after DOMContentLoaded), so the
+      // first render must also run after the load event.
+      window.addEventListener('load', function () {
+        // Defer past the app's own onload handler so window.app exists.
+        setTimeout(render, 0);
+      });
+    })();
+    </script>
+
     <!-- Home Tab -->
     <div class="ribbon-content active-content" id="tab-home">
       <div class="ribbon-group">
@@ -3035,6 +3235,20 @@ body.light-theme .command-palette-backdrop { background: rgba(40,50,60,.25); }
       <button class="tool-btn" id="tool-symbols" title="Symbol Library"><i class="ph ph-couch"></i></button>
       <button class="tool-btn" id="tool-touch" title="Touch Panel"><i class="ph ph-hand-pointing"></i></button>
       <button class="tool-btn" id="tool-geo" title="Sketch Geo-Referencing"><i class="ph ph-globe-hemisphere-west"></i></button>
+      <button class="tool-btn" id="tool-pages" title="Pages navigator" aria-label="Pages navigator" aria-pressed="false"><i class="ph ph-files"></i></button>
+    </aside>
+
+    <!-- Pages navigator (M3): document-structure rail. Click a row to switch
+         pages; ghost toggles the underlay; hover reveals delete. -->
+    <aside class="pages-nav" id="pages-nav" aria-label="Pages navigator">
+      <div class="pages-nav-header">
+        <span>Pages</span>
+        <button class="pages-nav-close" id="pages-nav-close" title="Close navigator" aria-label="Close navigator"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="pages-nav-list" id="pages-nav-list" role="list"></div>
+      <div class="pages-nav-footer">
+        <select id="nav-underlay-select" title="Ghost another page beneath this one" aria-label="Underlay"></select>
+      </div>
     </aside>
 
     <!-- Center Canvas Area -->
@@ -13495,6 +13709,7 @@ class UIManager {
       btn.disabled = !canGoPrev;
       btn.setAttribute('aria-disabled', String(!canGoPrev));
     });
+    if (window.__pagesNavRefresh) window.__pagesNavRefresh();
   }
 
   // --- Layers Panel ---
