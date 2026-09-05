@@ -2433,6 +2433,27 @@ body.light-theme select option { background: #ffffff; color: #20252b; }
   background: var(--border);
 }
 </style>
+<style>
+  /* Status-bar page indicator: never wrap or collapse (fixes "1 of 1"
+     stacking into overlapping glyphs when the bar runs out of room). */
+  #page-display {
+    white-space: nowrap;
+    flex: 0 0 auto;
+    min-width: max-content;
+  }
+  .page-indicator {
+    flex: 0 0 auto;
+  }
+  .status-right {
+    flex-wrap: nowrap;
+  }
+  /* At narrow effective viewports (high DPI scaling) the bar overflows;
+     keep everything reachable instead of clipping controls off-screen. */
+  .status-bar {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+</style>
 </head>
 <body class="dark-theme">
 
