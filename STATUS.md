@@ -33,6 +33,8 @@ Target: sketch.bundle.html (single generated HTML, ~10.4 MB). Git repo initializ
 | 24 | Phase 7: LICENSE (PolyForm Noncommercial 1.0.0 — no commercial use), README, CONTRIBUTING, SECURITY, CHANGELOG, NOTICE update; identity applied (Appraisal Sketch 1.0, thatappraiserx@gmail.com); runtime re-verified; commit 8823cfe, tag v1.0.0 | DONE 2026-09-05 |
 
 ## RELEASE: v1.0.0 tagged 2026-09-05. All plan phases complete.
+## POST-RELEASE: color scheme reverted to original (owner: palette predates and is unrelated to Apex).
+Rebuilt from pristine baseline replaying all non-color edits (renames, copy, logo, modules, docs); original stylesheet byte-identical except the single .apex-report-page class rename; all 100 original icon colors back; teal fully removed; new features (palette/nav/chip/pill) recolored to original #007acc accent. Verified: runtime sweep + vision QA (docs/qa-original-scheme.png); commit 2dbde4e.
 
 ## Notes / decisions
 - Never blind-replace "apex": escapeXml + geometric apex (curveApex etc.) + `urn:xmlns:apex:sketch:xml` (format contract) + `.apx/.skx` accept lists all stay. Justification in docs/INTERFACE_INVENTORY.md §2.
