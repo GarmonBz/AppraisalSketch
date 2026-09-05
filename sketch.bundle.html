@@ -5349,6 +5349,11 @@ if (typeof module !== 'undefined' && module.exports) module.exports = { Geometry
       return number.toFixed(1);
     }
 
+    /* COMPATIBILITY LITERAL: the urn:xmlns:apex:sketch:xml namespace is a
+       serialized-format contract carried by every XML sketch export, not a
+       branding string. Changing it would break downstream consumers that key
+       on the namespace. It is intentionally preserved through the 2026-09
+       interface remodel; see docs/FORMAT_COMPATIBILITY.md. */
     toXml(model) {
       const normalized = this.normalizeModel(model);
       const codeMap = new Map((normalized.codeTable || []).map(code => [code.code, code]));
