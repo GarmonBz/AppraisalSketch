@@ -37,6 +37,12 @@ SOFTWARE.
 The application logo and favicon are original vector artwork created for this
 project (2026-09 interface remodel) and carry no third-party claims.
 
+## Project identity
+
+Appraisal Sketch 1.0 — Copyright (c) 2026 Gerald Shugars, Jr. (NW Evaluations).
+Licensed under the PolyForm Noncommercial License 1.0.0 (see LICENSE).
+Support: thatappraiserx@gmail.com
+
 ## Notes
 
 - No other third-party fonts, images, or libraries are embedded; the bundle is
