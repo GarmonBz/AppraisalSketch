@@ -9661,7 +9661,8 @@ window.CanvasEngine = CanvasEngine;
 
   function wallSolidsEnabled(options) {
     const opts = options || {};
-    return (number(opts.exteriorThickness) > 0 || number(opts.interiorThickness) > 0) &&
+    return Boolean(opts.wallSolids) &&
+      (number(opts.exteriorThickness) > 0 || number(opts.interiorThickness) > 0) &&
       Boolean(root.WallSolids);
   }
 
@@ -13106,7 +13107,7 @@ class UIManager {
     const fontOptions = key => fonts.map(font => `<option ${selected(key, font)}>${font}</option>`).join('');
     const sizes = [8,9,10,11,12,14,16,18,20,22,24,28,36,48,72];
     const sizeOptions = key => sizes.map(size => `<option value="${size}" ${selected(key, size)}>${size}</option>`).join('');
-    const booleans = ['promptOnDeletion','inkConfirmation','autoPlacement','stripTrailingZeroes','sameColorAsLine','alignmentLines','alignmentPoints','testCloseIndicators','gridEnabled','minimumDimensionEnabled','autoShade','selectionHighlight','autoSaveEnabled','appendPageNumber','disableVideoTutorial','autoHealFiles','dimensionBold','dimensionItalic','dimensionUnderline','textBold','textItalic','textUnderline','autoPostBold','autoPostItalic','autoPostUnderline','circleAreaCalcs','displayOnClose','defineFirst','autoSubtractOverlapped','quickShapeDefine','redefine','panZoomDelete','saveImageWithSketch','splitWallsAtJunctions'];
+    const booleans = ['promptOnDeletion','inkConfirmation','autoPlacement','stripTrailingZeroes','sameColorAsLine','alignmentLines','alignmentPoints','testCloseIndicators','gridEnabled','minimumDimensionEnabled','autoShade','selectionHighlight','autoSaveEnabled','appendPageNumber','disableVideoTutorial','autoHealFiles','dimensionBold','dimensionItalic','dimensionUnderline','textBold','textItalic','textUnderline','autoPostBold','autoPostItalic','autoPostUnderline','circleAreaCalcs','displayOnClose','defineFirst','autoSubtractOverlapped','quickShapeDefine','redefine','panZoomDelete','saveImageWithSketch','splitWallsAtJunctions','wallSolids'];
     const numbers = ['decimalPrecision','dimensionOption','orthoAngle','minimumDimension','autoShadePercent','autoSaveInterval','imageDepth','dimensionFontSize','textFontSize','autoPostFontSize','textBackgroundOpacity','exteriorWidth','interiorWidth','exteriorThickness','interiorThickness','labelOpacity','imageQuality','pointerSize'];
     const collectOptions = form => {
       const data = new FormData(form);
@@ -13156,7 +13157,7 @@ class UIManager {
             </section>
             <section class="option-panel" data-option-panel="drawing">
               <div class="option-split"><fieldset><legend>Area Line Properties</legend><label>Drawing Color <input type="color" name="exteriorColor" value="${o.exteriorColor}"></label><label>Thickness <input type="number" name="exteriorWidth" min="2" max="12" value="${o.exteriorWidth}"></label></fieldset><fieldset><legend>Interior Line Properties</legend><label>Drawing Color <input type="color" name="interiorColor" value="${o.interiorColor}"></label><label>Thickness <input type="number" name="interiorWidth" min="1" max="6" value="${o.interiorWidth}"></label></fieldset></div>
-              <fieldset><legend>Wall Solids</legend><label>Exterior thickness (in) <input type="number" name="exteriorThickness" min="0" step="0.5" value="${o.exteriorThickness ?? 6}"></label><label>Interior thickness (in) <input type="number" name="interiorThickness" min="0" step="0.5" value="${o.interiorThickness ?? 4}"></label><small>Set both to 0 to render legacy single-line walls.</small></fieldset>
+              <fieldset><legend>Wall Solids</legend><label><input type="checkbox" name="wallSolids" ${checked('wallSolids')}> Enable wall solids</label><label>Exterior thickness (in) <input type="number" name="exteriorThickness" min="0" step="0.5" value="${o.exteriorThickness ?? 6}"></label><label>Interior thickness (in) <input type="number" name="interiorThickness" min="0" step="0.5" value="${o.interiorThickness ?? 4}"></label><small>When disabled, walls render as legacy single-line strokes.</small></fieldset>
               <fieldset><legend>Witness Line Properties</legend><label>Base <input type="color" name="witnessBaseColor" value="${o.witnessBaseColor}"></label><label>Interior <input type="color" name="witnessInteriorColor" value="${o.witnessInteriorColor}"></label><label>Curve <input type="color" name="witnessCurveColor" value="${o.witnessCurveColor}"></label><label>Label Opacity <input type="number" name="labelOpacity" min="0" max="100" value="${o.labelOpacity}"></label></fieldset>
               <fieldset><legend>Define Area Properties</legend><label><input type="checkbox" name="displayOnClose" ${checked('displayOnClose')}> Display on Close</label><label><input type="checkbox" name="defineFirst" ${checked('defineFirst')}> Define First</label><label><input type="checkbox" name="autoSubtractOverlapped" ${checked('autoSubtractOverlapped')}> Auto-Subtract Overlapped Areas</label><label><input type="checkbox" name="quickShapeDefine" ${checked('quickShapeDefine')}> Quick-Shape Define</label><label><input type="checkbox" name="redefine" ${checked('redefine')}> Re-Define</label><label><input type="checkbox" name="splitWallsAtJunctions" ${checked('splitWallsAtJunctions')}> Split wall dimensions at area junctions</label></fieldset>
               <fieldset><legend>Keyboard Modifiers</legend><label><input type="checkbox" name="panZoomDelete" ${checked('panZoomDelete')}> Pan-Zoom / Delete</label></fieldset>
@@ -13929,6 +13930,7 @@ class SketchApp {
         autoPostFont: 'Arial', autoPostFontSize: 16, autoPostBold: false, autoPostItalic: false, autoPostUnderline: false,
         circleAreaCalcs: false, textBackground: '#111111', textBackgroundOpacity: 0,
         exteriorColor: '#2B6CB0', interiorColor: '#63B3ED', exteriorWidth: 4, interiorWidth: 2,
+        wallSolids: false, // master switch for geometric wall solids; thicknesses below are inches and only apply when enabled
         exteriorThickness: 6, interiorThickness: 4, // geometric wall thickness in inches; 0 = legacy single-line render
         witnessBaseColor: '#ef4444', witnessInteriorColor: '#2563eb', witnessCurveColor: '#22c55e', labelOpacity: 50,
         displayOnClose: false, defineFirst: false, autoSubtractOverlapped: true, quickShapeDefine: false, redefine: false,
@@ -14328,6 +14330,7 @@ class SketchApp {
     options.interiorWidth = Math.max(1, Number(options.interiorWidth) || 2);
     options.exteriorWidth = Math.max(2, Number(options.exteriorWidth) || options.interiorWidth * 2);
     // Wall solid thicknesses are stored in inches; zero disables solids.
+    options.wallSolids = Boolean(options.wallSolids);
     options.exteriorThickness = Math.max(0, Number(options.exteriorThickness ?? 6) || 0);
     options.interiorThickness = Math.max(0, Number(options.interiorThickness ?? 4) || 0);
     this.wallSolidsCache = null;
@@ -14419,7 +14422,8 @@ class SketchApp {
 
   wallSolidsEnabled() {
     const options = this.state.options || {};
-    return (Number(options.exteriorThickness) > 0 || Number(options.interiorThickness) > 0) &&
+    return Boolean(options.wallSolids) &&
+      (Number(options.exteriorThickness) > 0 || Number(options.interiorThickness) > 0) &&
       Boolean(window.WallSolids);
   }
 
