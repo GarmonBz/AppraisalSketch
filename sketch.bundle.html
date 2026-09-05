@@ -2530,6 +2530,83 @@ body.suite-embedded .window-title {
   font-size: 11.5px;
   margin-right: 8px;
 }
+
+/* ---------- tool shelf groups (M2) ---------- */
+.toolbar-left .tool-btn:nth-child(5),
+.toolbar-left .tool-btn:nth-child(9),
+.toolbar-left .tool-btn:nth-child(11),
+.toolbar-left .tool-btn:nth-child(15) {
+  margin-top: 14px;
+  position: relative;
+}
+.toolbar-left .tool-btn:nth-child(5)::before,
+.toolbar-left .tool-btn:nth-child(9)::before,
+.toolbar-left .tool-btn:nth-child(11)::before,
+.toolbar-left .tool-btn:nth-child(15)::before {
+  content: '';
+  position: absolute;
+  top: -8px; left: 8px; right: 8px;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ---------- document bar: save-state pill + command search (M2) ---------- */
+.doc-save-state {
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 10px;
+  margin: 0 8px;
+  white-space: nowrap;
+  align-self: center;
+  font-variant-numeric: tabular-nums;
+}
+body:not(.suite-embedded) #command-palette-btn { margin-left: auto; }
+
+/* ---------- command palette (M2) ---------- */
+.command-palette-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.35);
+  z-index: 9998;
+}
+body.light-theme .command-palette-backdrop { background: rgba(40,50,60,.25); }
+.command-palette {
+  position: fixed; top: 12%; left: 50%; transform: translateX(-50%);
+  width: min(520px, 90vw);
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  box-shadow: 0 18px 60px rgba(0,0,0,.55);
+  z-index: 9999;
+  overflow: hidden;
+}
+.command-palette input {
+  width: 100%;
+  background: var(--bg-app);
+  color: var(--text-main);
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 14px;
+  font-size: 13px;
+  outline: none;
+}
+.command-palette ul {
+  list-style: none; margin: 0; padding: 6px;
+  max-height: 46vh; overflow: auto;
+}
+.command-palette li {
+  padding: 8px 10px;
+  border-radius: var(--radius-s);
+  font-size: 12.5px;
+  color: var(--text-main);
+  display: flex; justify-content: space-between; gap: 12px;
+  cursor: pointer;
+}
+.command-palette li.is-active { background: var(--accent-soft); color: var(--accent); }
+.command-palette li .cp-hint { color: var(--text-muted); font-size: 11px; }
+.command-palette .cp-empty { padding: 14px; color: var(--text-muted); font-size: 12px; text-align: center; }
 </style>
 </head>
 <body class="dark-theme">
@@ -2543,8 +2620,10 @@ body.suite-embedded .window-title {
       <button class="qat-btn" data-command="redo" title="Redo (Ctrl+Y)" aria-label="Redo" disabled><i class="ph ph-arrow-u-up-right"></i></button>
       <button class="qat-btn" data-command="undo-history" title="Undo History" aria-label="Undo History" disabled><i class="ph ph-list-bullets"></i></button>
       <button class="qat-btn" data-command="print" title="Print" aria-label="Print"><i class="ph ph-printer"></i></button>
+      <button class="qat-btn" id="command-palette-btn" title="Command search (Ctrl+K)" aria-label="Command search"><i class="ph ph-magnifying-glass"></i></button>
       <i class="ph ph-caret-down qat-more"></i>
     </div>
+    <div class="doc-save-state" id="doc-save-state">New document</div>
     <div class="window-title">Sketch - Sketch1</div>
     <div class="window-controls">
         <button data-command="window-minimize" title="Minimize"><i class="ph ph-minus"></i></button>
@@ -2577,6 +2656,125 @@ body.suite-embedded .window-title {
       if (qat) tabsRow.appendChild(qat);
       if (title) tabsRow.insertBefore(title, qat || null);
       titleBar.remove();
+    })();
+    </script>
+
+    <!-- Command palette (M2): Ctrl+K or the magnifier button. Routes through
+         the existing command registry (UIManager.executeCommand) - no new
+         command semantics, only discovery. -->
+    <script>
+    (function () {
+      'use strict';
+      var CATALOG = [
+        ['save', 'Save', 'F2'], ['save-as', 'Save As...', ''],
+        ['new', 'New sketch', ''], ['open', 'Open...', ''],
+        ['import', 'Import...', ''], ['export-png', 'Export as PNG', ''],
+        ['export-svg', 'Export as SVG', ''], ['export-dxf', 'Export as DXF', ''],
+        ['print', 'Print', 'Ctrl+P'], ['print-preview', 'Print preview', ''],
+        ['page-layout', 'Page layout', ''], ['options', 'Options', ''],
+        ['undo', 'Undo', 'Ctrl+Z'], ['redo', 'Redo', 'Ctrl+Y'],
+        ['undo-history', 'Undo history', ''],
+        ['cut', 'Cut', 'Ctrl+X'], ['copy', 'Copy', 'Ctrl+C'], ['paste', 'Paste', 'Ctrl+V'],
+        ['select-all', 'Select all', 'Ctrl+A'], ['select-by-type', 'Select by type', ''],
+        ['delete-selected', 'Delete selection', 'Del'],
+        ['rotate-sketch', 'Rotate sketch', ''], ['flip-sketch', 'Flip sketch', ''],
+        ['draw-color', 'Draw color', ''],
+        ['subject-info', 'Subject info', ''], ['area-attributes', 'Area attributes', ''],
+        ['mini-map', 'Mini map', ''], ['toggle-calcs', 'View calcs', ''],
+        ['page-prev', 'Previous page', ''], ['page-next', 'Next page', ''],
+        ['page-add', 'Add page', ''], ['page-delete', 'Delete page', ''],
+        ['toggle-canvas-background', 'Canvas background', ''],
+        ['interface-theme', 'Interface theme', ''],
+        ['toggle-grid', 'Toggle grid', ''], ['filter', 'Filter selection', ''],
+        ['disto-connect', 'Connect Bluetooth device', ''],
+        ['area-breakdown', 'Area breakdown', ''], ['area-code-settings', 'Area codes', ''],
+        ['shortcuts', 'Keyboard shortcuts', 'F1'],
+        ['zoom-fence', 'Zoom fence', ''], ['email', 'Email', '']
+      ];
+      var backdrop = null, panel = null, input = null, list = null, active = 0, matches = [];
+
+      function app() { return window.app && window.app.ui ? window.app.ui : null; }
+
+      function open() {
+        if (!app()) return;
+        if (panel) { close(); return; }
+        backdrop = document.createElement('div');
+        backdrop.className = 'command-palette-backdrop';
+        panel = document.createElement('div');
+        panel.className = 'command-palette';
+        panel.setAttribute('role', 'dialog');
+        panel.setAttribute('aria-label', 'Command search');
+        panel.innerHTML = '<input type="text" placeholder="Type a command..." aria-label="Command search">' +
+          '<ul></ul>';
+        document.body.appendChild(backdrop);
+        document.body.appendChild(panel);
+        input = panel.querySelector('input');
+        list = panel.querySelector('ul');
+        active = 0;
+        render('');
+        input.addEventListener('input', function () { render(input.value); });
+        input.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+          else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+          else if (e.key === 'Enter') { e.preventDefault(); run(); }
+          else if (e.key === 'Escape') { e.preventDefault(); close(); }
+        });
+        backdrop.addEventListener('pointerdown', close);
+        input.focus();
+      }
+      function render(q) {
+        var needle = q.trim().toLowerCase();
+        matches = CATALOG.filter(function (c) {
+          return !needle || c[1].toLowerCase().indexOf(needle) !== -1;
+        });
+        active = Math.min(active, Math.max(0, matches.length - 1));
+        list.innerHTML = '';
+        if (!matches.length) {
+          var empty = document.createElement('div');
+          empty.className = 'cp-empty';
+          empty.textContent = 'No matching command.';
+          list.appendChild(empty);
+          return;
+        }
+        matches.forEach(function (c, i) {
+          var li = document.createElement('li');
+          if (i === active) li.classList.add('is-active');
+          li.innerHTML = '<span>' + c[1] + '</span><span class="cp-hint">' + c[2] + '</span>';
+          li.addEventListener('click', function () { active = i; run(); });
+          list.appendChild(li);
+        });
+      }
+      function move(d) {
+        if (!matches.length) return;
+        active = (active + d + matches.length) % matches.length;
+        render(input.value);
+        var el = list.children[active];
+        if (el && el.scrollIntoView) el.scrollIntoView({ block: 'nearest' });
+      }
+      function run() {
+        if (!matches.length) return;
+        var id = matches[active][0];
+        close();
+        try { app().executeCommand(id); } catch (e) { /* command reported its own error */ }
+      }
+      function close() {
+        if (backdrop) backdrop.remove();
+        if (panel) panel.remove();
+        backdrop = panel = input = list = null;
+      }
+      document.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && String(e.key).toLowerCase() === 'k') {
+          e.preventDefault();
+          open();
+        } else if (e.key === 'Escape' && panel) {
+          e.preventDefault();
+          close();
+        }
+      });
+      window.addEventListener('load', function () {
+        var btn = document.getElementById('command-palette-btn');
+        if (btn) btn.addEventListener('click', open);
+      });
     })();
     </script>
 
@@ -18620,6 +18818,8 @@ class SketchApp {
     document.title = title;
     const el = document.querySelector('.window-title');
     if (el) el.textContent = title;
+    const pill = document.getElementById('doc-save-state');
+    if (pill && this.fileName && this.fileName !== 'Untitled') pill.textContent = this.fileName;
   }
 
   /* Serializable drawing model shared by the standalone sketch-file save,
