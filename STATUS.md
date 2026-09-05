@@ -13,12 +13,14 @@ Target: sketch.bundle.html (single generated HTML, ~10.4 MB). Git repo initializ
 | 4 | Phase 1.5 DOM/JS dependency map → docs/INTERFACE_INVENTORY.md §4 | DONE 2026-09-05 |
 | 5 | Phase 1.6 third-party inventory (Phosphor woff2 embedded, NO license notice found; C2PA favicon) | DONE 2026-09-05 |
 | 6 | Host-contract check: AW3 shell.html uses only __exportState/__importState/__exportValidationState — ApexApp/ApexReport/.apex-report-page renames safe | DONE 2026-09-05 |
-| 7 | Renames: ApexApp→SketchApp, ApexReport→SketchReport, .apex-report-page→.report-page, mailto, comments | IN PROGRESS |
-| 8 | Logo/favicon replacement (C2PA PNG out, original inline SVG in) | PENDING |
-| 9 | New skin layer (tokens: stone/charcoal + teal; restyle chrome) | PENDING |
-| 10 | Copy: Photometrics→Reference Image, Auto-Post→Automatic labels | PENDING |
-| 11 | NOTICE.md third-party notices | PENDING |
-| 12 | Browser runtime verification (boot, console, screenshots) | PENDING |
+| 7 | Renames: ApexApp→SketchApp, ApexReport→SketchReport, .apex-report-page→.report-page, mailto, comments | DONE 2026-09-05 |
+| 8 | Logo/favicon replacement (C2PA PNG out, original inline SVG in; −94 KB) | DONE 2026-09-05 |
+| 9 | New skin layer (tokens: stone/charcoal + teal #14B8A6; chrome restyle; native-control theming) | DONE 2026-09-05 |
+| 10 | Copy: Photometrics→Reference Image, Auto-Post→Automatic labels (UI strings only) | DONE 2026-09-05 |
+| 11 | NOTICE.md third-party notices (Phosphor MIT; original mark) | DONE 2026-09-05 |
+| 12 | Runtime verification (headless CDP): clean boot, 0 exceptions, SketchApp live, 76 data-command btns, tab/panel/theme switching, report render emits .report-page, host hooks __exportState/__importState/__exportValidationState round-trip OK, screenshots in docs/qa-*.png | DONE 2026-09-05 |
+| 13 | Visual pass (vision QA on screenshots): 3 native-control defects found → fixed (dark selects, teal accent-color, no blue outlines) → re-verified clean | DONE 2026-09-05 |
+| 14 | Git commit 1b6f12b | DONE 2026-09-05 |
 
 ## Notes / decisions
 - Never blind-replace "apex": escapeXml + geometric apex (curveApex etc.) + `urn:xmlns:apex:sketch:xml` (format contract) + `.apx/.skx` accept lists all stay. Justification in docs/INTERFACE_INVENTORY.md §2.
