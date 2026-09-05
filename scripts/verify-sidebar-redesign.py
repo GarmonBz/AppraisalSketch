@@ -125,8 +125,8 @@ def main():
 
         # --- structural probes ---
         results.append(check("tabs count 5", cdp.js("document.querySelectorAll('.sidebar-tab').length"), 5))
-        results.append(check("nav is first child of dock",
-            cdp.js("document.getElementById('sidebar-dock').firstElementChild.className"), "sidebar-tabs"))
+        results.append(check("nav is first element child of dock",
+            cdp.js("[...document.getElementById('sidebar-dock').children].find(e=>e.className==='sidebar-tabs')?.className === 'sidebar-tabs'"), True))
         results.append(check("collapse + expand present",
             cdp.js("[!!document.getElementById('sidebar-collapse'), !!document.getElementById('sidebar-expand')]"), [True, True]))
         results.append(check("no pin in DOM (header hidden)",

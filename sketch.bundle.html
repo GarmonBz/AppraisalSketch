@@ -2609,6 +2609,29 @@ body.light-theme .area-pending .area-pending-code { color: #1677bd; }
   outline: 2px solid var(--bg-active);
   outline-offset: -2px;
 }
+
+/* Resizable dock width (drag the left edge; double-click resets).
+   Width rides on --sidebar-w so the :not(.open) 30px rule still wins. */
+.sidebar-dock {
+  width: var(--sidebar-w, 312px);
+  min-width: var(--sidebar-w, 312px);
+  position: relative;
+}
+#sidebar-resize-handle {
+  position: absolute;
+  left: -3px;
+  top: 0;
+  bottom: 0;
+  width: 7px;
+  cursor: col-resize;
+  z-index: 30;
+  touch-action: none;
+}
+#sidebar-resize-handle:hover,
+#sidebar-resize-handle.dragging { background: var(--bg-active); opacity: 0.35; }
+.sidebar-dock:not(.open) #sidebar-resize-handle { display: none; }
+body.sidebar-resizing { user-select: none; cursor: col-resize; }
+body.sidebar-resizing .sidebar-dock { transition: none; }
 </style>
 </head>
 <body class="dark-theme">
@@ -21580,6 +21603,120 @@ window.onload = () => {
           refreshZones();
           return r;
         };
+      }
+    }, 0);
+  }
+
+  if (window.app) boot();
+  else window.addEventListener('load', boot);
+})();
+</script>
+
+<script>
+/* ====== SIDEBAR RESIZE LAYER (2026-09) ======
+   Drag the dock's left edge to resize (plan: resizable dock, width saved as a
+   UI preference). Width rides on the --sidebar-w custom property so the
+   collapsed 30px rules are unaffected. Range 320-400 (plan), additionally
+   clamped so the canvas keeps >=220px. Double-click the handle to reset. */
+(function () {
+  'use strict';
+  const MIN = 320, MAX = 400, CANVAS_MIN = 220;
+
+  function dock() { return document.getElementById('sidebar-dock'); }
+
+  function clamp(w) {
+    const avail = Math.max(MIN, window.innerWidth - CANVAS_MIN);
+    return Math.max(MIN, Math.min(MAX, Math.round(w), avail));
+  }
+
+  function applyWidth(px, persist) {
+    const d = dock();
+    if (!d) return;
+    const w = clamp(px);
+    d.style.setProperty('--sidebar-w', w + 'px');
+    if (persist && window.app && window.app.state && window.app.state.sidebar) {
+      window.app.state.sidebar.width = w;
+    }
+    return w;
+  }
+
+  function storedWidth() {
+    const w = window.app && window.app.state && window.app.state.sidebar ? window.app.state.sidebar.width : null;
+    return (typeof w === 'number' && w >= MIN && w <= MAX) ? w : null;
+  }
+
+  function resetWidth() {
+    const d = dock();
+    if (!d) return;
+    d.style.removeProperty('--sidebar-w');
+    if (window.app && window.app.state && window.app.state.sidebar) {
+      delete window.app.state.sidebar.width;
+    }
+    window.app && window.app.canvas && window.app.canvas.resize && window.app.canvas.resize();
+  }
+
+  function bindHandle() {
+    const handle = document.getElementById('sidebar-resize-handle');
+    if (!handle || handle.dataset.srBound) return;
+    handle.dataset.srBound = '1';
+    handle.title = 'Drag to resize \u00b7 double-click to reset';
+    handle.addEventListener('pointerdown', (e) => {
+      const d = dock();
+      if (!d || !d.classList.contains('open')) return;
+      e.preventDefault();
+      try { handle.setPointerCapture(e.pointerId); } catch (_) { /* headless */ }
+      handle.classList.add('dragging');
+      document.body.classList.add('sidebar-resizing');
+      const right = d.getBoundingClientRect().right;
+      const move = (ev) => {
+        applyWidth(right - ev.clientX, true);
+        window.app && window.app.canvas && window.app.canvas.resize && window.app.canvas.resize();
+      };
+      const up = () => {
+        handle.classList.remove('dragging');
+        document.body.classList.remove('sidebar-resizing');
+        window.app && window.app.canvas && window.app.canvas.resize && window.app.canvas.resize();
+        handle.removeEventListener('pointermove', move);
+        handle.removeEventListener('pointerup', up);
+        handle.removeEventListener('pointercancel', up);
+      };
+      handle.addEventListener('pointermove', move);
+      handle.addEventListener('pointerup', up);
+      handle.addEventListener('pointercancel', up);
+    });
+    handle.addEventListener('dblclick', resetWidth);
+  }
+
+  function ensureHandle() {
+    const d = dock();
+    if (d && !document.getElementById('sidebar-resize-handle')) {
+      const h = document.createElement('div');
+      h.id = 'sidebar-resize-handle';
+      d.prepend(h);
+    }
+  }
+
+  function boot() {
+    setTimeout(() => {
+      ensureHandle();
+      const w = storedWidth();
+      if (w) applyWidth(w, false);
+      bindHandle();
+      const app = window.app;
+      if (app && !app.__srResizeHooked) {
+        app.__srResizeHooked = true;
+        const ui = app.ui;
+        if (ui && ui.restoreSidebarState) {
+          const orig = ui.restoreSidebarState.bind(ui);
+          ui.restoreSidebarState = function (...args) {
+            const r = orig(...args);
+            ensureHandle();
+            const sw = storedWidth();
+            if (sw) applyWidth(sw, false);
+            bindHandle();
+            return r;
+          };
+        }
       }
     }, 0);
   }
