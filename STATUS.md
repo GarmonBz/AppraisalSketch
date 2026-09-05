@@ -25,9 +25,10 @@ Target: sketch.bundle.html (single generated HTML, ~10.4 MB). Git repo initializ
 | 16 | M2 runtime verify: boot clean, palette open/filter/run/Esc/Ctrl+K pass, pill updates on rename; top-bar crop verified alignment; commits 56e890f | DONE 2026-09-05 |
 | 17 | M3: left pages navigator (page switch rows, underlay ghosting per row, hover delete routed through deletePage(), mirrored underlay select), toggle in tool shelf, hooked into updatePageDisplay | DONE 2026-09-05 |
 | 18 | M3 verify: boot clean w/ rows at load (deferred render), add/switch/ghost/un-ghost/close pass, canvas resize clean, visual crop verified; commit 3890ee3 | DONE 2026-09-05 |
-| 19 | M4 (next): Calculation drawer upgrade, inspector field-order audit, footer slimming | PENDING |
-| 20 | Phase 5: preference/storage migration tests, file-compat fixtures | PENDING |
-| 21 | Phase 6: full parity suite, performance baseline | PENDING |
+| 19 | M4: persistent totals chip in status bar (live GLA + area count, refreshed by updateCalcsPanel on every recalc path, click opens Calcs panel) | DONE 2026-09-05 |
+| 20 | M4 verify: end-to-end draw+define test (20x15 rect, GLA1 -> chip "GLA 300.0 sf | 1 area", summary matches), boot clean, status-bar crop verified; commit 6317904. NOTE: valid GLA codes are GLA1..GLA4 (per-floor), bare 'GLA' is not a code | DONE 2026-09-05 |
+| 21 | Phase 5: preference/storage migration tests, file-compat fixtures | PENDING |
+| 22 | Phase 6: full parity suite, performance baseline | PENDING |
 
 ## Notes / decisions
 - Never blind-replace "apex": escapeXml + geometric apex (curveApex etc.) + `urn:xmlns:apex:sketch:xml` (format contract) + `.apx/.skx` accept lists all stay. Justification in docs/INTERFACE_INVENTORY.md §2.
