@@ -2454,6 +2454,162 @@ body.light-theme select option { background: #ffffff; color: #20252b; }
     scrollbar-width: thin;
   }
 </style>
+<style>
+/* ====== SIDEBAR REDESIGN LAYER (2026-09) ======
+   Compact workbench revision: top tab strip, three-zone Areas workbench,
+   dedicated collapse control. Original palette only (--bg-active accent). */
+
+.sidebar-dock { flex-direction: column; }
+.sidebar-dock:not(.open) { width: 30px; min-width: 30px; }
+
+/* Collapsed state: hide panels + tab strip, show slim expand rail */
+.sidebar-dock:not(.open) .panels-right,
+.sidebar-dock:not(.open) .sidebar-tabs { display: none; }
+#sidebar-collapsed-rail { display: none; }
+.sidebar-dock:not(.open) #sidebar-collapsed-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
+  width: 100%;
+}
+
+/* Tab strip now sits ABOVE the panel host */
+.sidebar-tabs {
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  flex-direction: row;
+  align-items: stretch;
+  border-left: 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-ribbon);
+}
+.sidebar-tab {
+  height: 30px;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0 6px;
+  border: 0;
+  border-right: 1px solid var(--border);
+  border-bottom: 0;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  writing-mode: horizontal-tb;
+  font-size: 11px;
+  letter-spacing: .2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sidebar-tab:hover { color: var(--text-main); background: var(--bg-hover); }
+.sidebar-tab.active { color: #fff; background: var(--bg-active); }
+.sidebar-tab.active > span { font-weight: 600; }
+
+.sidebar-collapse {
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+  margin: auto 2px;
+  align-self: center;
+  border: 0;
+  border-left: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+.sidebar-collapse:hover { color: var(--text-main); background: var(--bg-hover); }
+#sidebar-expand { border-left: 0; }
+
+.panels-right { flex: 1; width: 100%; min-width: 0; }
+.panel-body { gap: 6px; }
+
+/* ---- Areas workbench: three zones ---- */
+.area-zone {
+  border: 1px solid var(--border);
+  background: var(--bg-panel);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.area-summary-zone { flex: 0 0 auto; }
+.area-browser-zone { flex: 1 1 130px; }
+.area-setup-zone { flex: 0 0 auto; }
+
+.area-zone-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.area-summary-head,
+.area-browser-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 5px 6px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-ribbon);
+}
+.area-summary-head .action-btn { flex: 0 0 auto; padding: 2px 10px; }
+
+.area-selection-body { padding: 6px 8px; font-size: 12px; color: var(--text-muted); }
+.area-selection-body .area-sel-name { color: var(--text-main); font-weight: 600; }
+.area-selection-body .area-sel-meta { font-size: 11px; }
+.area-selection-body .area-sel-line { display: flex; justify-content: space-between; gap: 8px; }
+
+.area-browser-zone .lib-search-input { margin: 6px 6px 4px; }
+.area-browser-zone .area-tree {
+  border: 0;
+  border-top: 1px solid var(--border);
+  background: transparent;
+  margin: 0 0 4px;
+}
+
+.area-setup-zone { padding: 6px; gap: 6px; }
+.area-name-input { width: 100%; }
+.area-pending {
+  font-size: 11px;
+  color: var(--text-main);
+  background: var(--bg-app);
+  border: 1px dashed var(--border);
+  padding: 4px 8px;
+}
+.area-pending .area-pending-code { font-weight: 700; color: var(--bg-active); }
+body.light-theme .area-pending .area-pending-code { color: #1677bd; }
+.define-primary-actions { display: flex; gap: 6px; }
+.define-primary-actions .action-btn { flex: 1; }
+.define-more summary {
+  cursor: pointer;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 2px 0;
+  user-select: none;
+}
+.define-more summary:hover { color: var(--text-main); }
+.define-more[open] > summary { color: var(--text-main); }
+.define-more .auto-post { margin-top: 4px; }
+.define-more .define-secondary-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.define-more .define-secondary-actions .action-btn { flex: 1 1 45%; }
+
+/* Panel headers keep their title but no longer carry the pin */
+.panel-header { display: none; }
+
+/* Focus + a11y on new controls */
+.sidebar-tab:focus-visible,
+.sidebar-collapse:focus-visible,
+.alpha-filter-btn:focus-visible {
+  outline: 2px solid var(--bg-active);
+  outline-offset: -2px;
+}
+</style>
 </head>
 <body class="dark-theme">
 
@@ -3010,6 +3166,17 @@ body.light-theme select option { background: #ffffff; color: #20252b; }
     <!-- Docked right sidebar: one collapsible shell, five work modes
          (Define, Text, Symbols, Calcs, Layers), tab rail always visible. -->
     <aside class="sidebar-dock open" id="sidebar-dock" aria-label="Sketch sidebar">
+      <nav class="sidebar-tabs" aria-label="Sidebar modes">
+<button class="sidebar-tab active" type="button" data-sidebar-target="panel-define-area" aria-controls="panel-define-area" aria-selected="true"><span>Define</span></button>
+<button class="sidebar-tab" type="button" data-sidebar-target="panel-text-library" aria-controls="panel-text-library" aria-selected="false"><span>Text</span></button>
+<button class="sidebar-tab" type="button" data-sidebar-target="panel-symbol-library" aria-controls="panel-symbol-library" aria-selected="false"><span>Symbols</span></button>
+<button class="sidebar-tab" type="button" data-sidebar-target="panel-calcs" aria-controls="panel-calcs" aria-selected="false"><span>Calcs</span></button>
+<button class="sidebar-tab" type="button" data-sidebar-target="panel-layers" aria-controls="panel-layers" aria-selected="false"><span>Layers</span></button>
+        <button class="sidebar-collapse" id="sidebar-collapse" type="button" title="Collapse sidebar" aria-label="Collapse sidebar"><i class="ph-bold ph-caret-right"></i></button>
+      </nav>
+      <div id="sidebar-collapsed-rail">
+        <button class="sidebar-collapse" id="sidebar-expand" type="button" title="Expand sidebar" aria-label="Expand sidebar"><i class="ph-bold ph-caret-left"></i></button>
+      </div>
       <section class="panels-right" id="sidebar-panel-host">
         <!-- Define Area Panel -->
         <div class="panel" id="panel-define-area" data-sidebar-key="define">
@@ -3017,50 +3184,65 @@ body.light-theme select option { background: #ffffff; color: #20252b; }
             <span>Define</span>
             <button class="sidebar-pin active" type="button" title="Keep sidebar open" aria-label="Keep sidebar open" aria-pressed="true"><i class="ph-fill ph-push-pin"></i></button>
           </div>
-          <div class="panel-body">
-            <input type="search" id="area-code-search" class="lib-search-input" placeholder="Filter area codes..." aria-label="Filter area codes">
-            <div class="area-tree" role="tree"></div>
-
-            <div class="define-actions define-primary-actions">
-              <button class="action-btn" id="btn-apply-area" disabled>Apply</button>
+<div class="panel-body">
+          <div class="area-zone area-summary-zone" aria-live="polite">
+            <div class="area-summary-head"><span class="area-zone-title">Selection</span>
               <button class="action-btn" id="btn-edit-area" disabled>Edit</button>
+            </div>
+            <div class="area-selection-body" id="area-selection-body"></div>
+          </div>
+
+          <div class="area-zone area-browser-zone">
+            <div class="area-browser-head">
+              <span class="area-zone-title">Classification</span>
               <button class="action-btn" id="btn-add-area-code">New</button>
             </div>
+            <input type="search" id="area-code-search" class="lib-search-input" placeholder="Filter area codes..." aria-label="Filter area codes">
+            <div class="area-tree" role="tree"></div>
+          </div>
+
+          <div class="area-zone area-setup-zone">
+            <input type="text" class="area-name-input" id="area-name-input" placeholder="Custom Area Name...">
+            <div class="area-pending" id="area-pending-code" aria-live="polite">No classification selected</div>
+            <div class="define-actions define-primary-actions">
+              <button class="action-btn" id="btn-apply-area" disabled>Apply</button>
+            </div>
+            <details class="define-more">
+              <summary>Labels</summary>
+              <div class="auto-post">
+              <div class="auto-post-title">Automatic labels</div>
+              <div class="auto-post-grid">
+              <label><input type="checkbox" id="autopost-code"> Code</label>
+              <label><input type="checkbox" id="autopost-name" checked> Name</label>
+              <label><input type="checkbox" id="autopost-dims" checked> Dims <select id="dimension-placement"><option value="out">Out</option><option value="in">In</option></select></label>
+              <label><input type="checkbox" id="autopost-calcs" checked> Calcs</label>
+              <label><input type="checkbox" id="autopost-base"> Base</label>
+              <label><input type="checkbox" id="autopost-factor"> Factor</label>
+              </div>
+              <div class="auto-post-suffix">
+              <span>Area Label Suffix:</span>
+              <select id="autopost-suffix" aria-label="Area label suffix">
+              <option>sf</option><option>ft²</option><option>SF</option><option>FT²</option>
+              <option>s.f.</option><option>S.F.</option><option>sq. ft.</option><option>Sq. Ft.</option>
+              <option>m</option><option>m²</option><option>sq. m</option><option>Sq. M</option>
+              </select>
+              </div>
+              </div>
+            </details>
             <details class="define-more">
               <summary>Area tools</summary>
               <div class="define-actions define-secondary-actions">
-                <button class="action-btn" id="btn-redefine-area">Redefine</button>
-                <button class="action-btn" id="btn-clone-area">Clone</button>
-                <button class="action-btn" id="btn-reopen-area">Reopen</button>
-                <button class="action-btn" id="btn-detect-regions">Detect Regions</button>
+              <button class="action-btn" id="btn-redefine-area">Redefine</button>
+              <button class="action-btn" id="btn-clone-area">Clone</button>
+              <button class="action-btn" id="btn-reopen-area">Reopen</button>
+              <button class="action-btn" id="btn-detect-regions">Detect Regions</button>
               </div>
             </details>
-
-            <input type="text" class="area-name-input" id="area-name-input" placeholder="Custom Area Name...">
-
-            <div class="auto-post">
-              <div class="auto-post-title">Automatic labels</div>
-              <div class="auto-post-grid">
-                <label><input type="checkbox" id="autopost-code"> Code</label>
-                <label><input type="checkbox" id="autopost-name" checked> Name</label>
-                <label><input type="checkbox" id="autopost-dims" checked> Dims <select id="dimension-placement"><option value="out">Out</option><option value="in">In</option></select></label>
-                <label><input type="checkbox" id="autopost-calcs" checked> Calcs</label>
-                <label><input type="checkbox" id="autopost-base"> Base</label>
-                <label><input type="checkbox" id="autopost-factor"> Factor</label>
-              </div>
-              <div class="auto-post-suffix">
-                <span>Area Label Suffix:</span>
-                <select id="autopost-suffix" aria-label="Area label suffix">
-                  <option>sf</option><option>ft²</option><option>SF</option><option>FT²</option>
-                  <option>s.f.</option><option>S.F.</option><option>sq. ft.</option><option>Sq. Ft.</option>
-                  <option>m</option><option>m²</option><option>sq. m</option><option>Sq. M</option>
-                </select>
-              </div>
-            </div>
           </div>
         </div>
+      </div>
 
-        <!-- Text Library Panel -->
+                <!-- Text Library Panel -->
         <div class="panel" id="panel-text-library" data-sidebar-key="text" hidden>
           <div class="panel-header">
             <span>Text</span>
@@ -3131,13 +3313,6 @@ body.light-theme select option { background: #ffffff; color: #20252b; }
         </div>
       </section>
 
-      <nav class="sidebar-tabs" aria-label="Sidebar modes">
-        <button class="sidebar-tab active" type="button" data-sidebar-target="panel-define-area" aria-controls="panel-define-area" aria-selected="true"><span>Define</span></button>
-        <button class="sidebar-tab" type="button" data-sidebar-target="panel-text-library" aria-controls="panel-text-library" aria-selected="false"><span>Text</span></button>
-        <button class="sidebar-tab" type="button" data-sidebar-target="panel-symbol-library" aria-controls="panel-symbol-library" aria-selected="false"><span>Symbols</span></button>
-        <button class="sidebar-tab" type="button" data-sidebar-target="panel-calcs" aria-controls="panel-calcs" aria-selected="false"><span>Calcs</span></button>
-        <button class="sidebar-tab" type="button" data-sidebar-target="panel-layers" aria-controls="panel-layers" aria-selected="false"><span>Layers</span></button>
-      </nav>
     </aside>
   </div>
 
@@ -21268,5 +21443,166 @@ window.onload = () => {
 
 </script>
 <!-- /CAD IMPORT LAYER -->
+<script>
+/* ====== SIDEBAR REDESIGN LAYER (JS, 2026-09) ======
+   Compact workbench revision. Additive only: all existing ids,
+   data-sidebar-target values, showPanel() semantics and state keys
+   (sidebar.active = define|text|symbols|calcs|layers) are preserved. */
+(function () {
+  'use strict';
+  const PANEL_KEYS = { 'panel-define-area': 'define', 'panel-text-library': 'text',
+                       'panel-symbol-library': 'symbols', 'panel-calcs': 'calcs', 'panel-layers': 'layers' };
+
+  function dock() { return document.getElementById('sidebar-dock'); }
+
+  /* Collapse / expand controls */
+  function bindCollapse() {
+    const c = document.getElementById('sidebar-collapse');
+    const e = document.getElementById('sidebar-expand');
+    if (c) c.addEventListener('click', () => window.app?.ui?.setSidebarOpen(false));
+    if (e) e.addEventListener('click', () => window.app?.ui?.setSidebarOpen(true));
+  }
+
+  /* Tab click contract: clicking the ACTIVE tab collapses (pre-existing
+     behavior), clicking any other tab activates that panel. */
+  function bindTabs() {
+    document.querySelectorAll('.sidebar-tab').forEach(tab => {
+      if (tab.dataset.srBound) return;
+      tab.dataset.srBound = '1';
+      tab.addEventListener('click', () => {
+        const isActive = tab.classList.contains('active');
+        if (isActive && dock()?.classList.contains('open')) window.app?.ui?.setSidebarOpen(false);
+        else window.app?.ui?.showPanel(tab.dataset.sidebarTarget);
+      });
+    });
+  }
+
+  /* Pending-classification readout, kept in sync with the tree selection. */
+  function readSelection() {
+    return {
+      code: window.app?.state?.selectedAreaType || null,
+      name: window.app?.state?.selectedAreaName || null
+    };
+  }
+
+  function updatePending() {
+    const el = document.getElementById('area-pending-code');
+    if (!el) return;
+    const { code, name } = readSelection();
+    el.innerHTML = code
+      ? `Pending: <span class="area-pending-code">${code}</span>${name ? ' &middot; ' + name : ''}`
+      : 'No classification selected';
+  }
+
+  function selectedPolygons() {
+    const st = window.app?.state;
+    if (!st) return [];
+    const polys = (st.polygons || []).filter(p => st.selectedPolyIds?.has(p.id));
+    return polys;
+  }
+
+  /* Selection summary zone: honest empty state, or live area facts. */
+  function updateSelectionSummary() {
+    const body = document.getElementById('area-selection-body');
+    if (!body) return;
+    const st = window.app?.state;
+    const polys = selectedPolygons();
+    if (!polys.length) {
+      body.innerHTML = st && st.selectedAreaType
+        ? '<div>Classification chosen &mdash; draw or select an area, then Apply.</div>'
+        : '<div>No selection. Pick a classification below, draw an area, then Apply.</div>';
+      return;
+    }
+    const rows = polys.map(poly => {
+      const area = (typeof poly.netArea === 'number' && Number.isFinite(poly.netArea))
+        ? poly.netArea : poly.area;
+      const areaText = (typeof area === 'number' && Number.isFinite(area))
+        ? area.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' sf'
+        : '&mdash;';
+      const name = poly.name || poly.type || '(unclassified)';
+      return `<div class="area-sel-line"><span class="area-sel-name">${name}</span><span class="area-sel-meta">${areaText}</span></div>`;
+    }).join('');
+    const total = polys.reduce((sum, p) => {
+      const a = (typeof p.netArea === 'number' && Number.isFinite(p.netArea)) ? p.netArea : p.area;
+      return sum + (typeof a === 'number' && Number.isFinite(a) ? a : 0);
+    }, 0);
+    body.innerHTML = rows + (polys.length > 1
+      ? `<div class="area-sel-line"><span class="area-sel-name">Total</span><span class="area-sel-meta">${total.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })} sf</span></div>`
+      : '');
+  }
+
+  function refreshZones() {
+    try { updatePending(); updateSelectionSummary(); } catch (_) { /* zone refresh must never break the app */ }
+  }
+
+  /* Observe the pieces the zones depend on: tree selection class + Apply/Edit
+     disabled state (updateAreaActionStates toggles btn-apply-area). */
+  function observe() {
+    const applyBtn = document.getElementById('btn-apply-area');
+    if (applyBtn && !applyBtn.dataset.srObserved) {
+      applyBtn.dataset.srObserved = '1';
+      new MutationObserver(refreshZones).observe(applyBtn, { attributes: true, attributeFilter: ['disabled'] });
+    }
+    document.querySelectorAll('.area-btn').forEach(btn => {
+      if (!btn.dataset.srObserved) {
+        btn.dataset.srObserved = '1';
+        btn.addEventListener('click', () => setTimeout(refreshZones, 0));
+      }
+    });
+    const tree = document.querySelector('.area-tree');
+    if (tree && !tree.dataset.srObserved) {
+      tree.dataset.srObserved = '1';
+      new MutationObserver(() => {
+        document.querySelectorAll('.area-btn').forEach(btn => {
+          if (!btn.dataset.srObserved) {
+            btn.dataset.srObserved = '1';
+            btn.addEventListener('click', () => setTimeout(refreshZones, 0));
+          }
+        });
+        refreshZones();
+      }).observe(tree, { childList: true, subtree: false });
+    }
+  }
+
+  /* Canvas selection changes flow through app.render(); hook it once. */
+  function hookRender() {
+    const app = window.app;
+    if (!app || app.__srRenderHooked) return;
+    app.__srRenderHooked = true;
+    const orig = app.render?.bind(app);
+    if (orig) app.render = function (...args) {
+      const r = orig(...args);
+      refreshZones();
+      return r;
+    };
+  }
+
+  function boot() {
+    setTimeout(() => {
+      bindCollapse();
+      bindTabs();
+      observe();
+      hookRender();
+      refreshZones();
+      /* Keep zones fresh if the app or DOM rebuilds later */
+      const app = window.app;
+      if (app && !app.__srBootHooked) {
+        app.__srBootHooked = true;
+        const origRestore = app.ui?.restoreSidebarState?.bind(app.ui);
+        if (origRestore) app.ui.restoreSidebarState = function (...args) {
+          const r = origRestore(...args);
+          bindTabs();
+          observe();
+          refreshZones();
+          return r;
+        };
+      }
+    }, 0);
+  }
+
+  if (window.app) boot();
+  else window.addEventListener('load', boot);
+})();
+</script>
 </body>
 </html>
