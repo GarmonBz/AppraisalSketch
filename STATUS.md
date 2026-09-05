@@ -56,6 +56,9 @@ Verified headless CDP: boot clean, 0 module buttons in DOM, shortcuts button int
 Owner replaced `D:\AIProjects\Sketch Test\Pointer.png` (729×729, bolder strokes w/ flat caps) and asked for re-swap. Same pipeline as first swap: white→transparent master (alpha = inverted luminance ×1.06), LANCZOS 128/64/32, full `data:` URLs, byte-safe splice of `__CURSOR_DATA__` statement. All 7 sprites replaced; hotspot center unchanged.
 Verified headless CDP: boot clean, all 7 keys resolve, live sprites pixel-identical to references, cursor resolves 128/64/32 × dark/light with correct hotspots, on-canvas images load; 32px-on-dark visual = crisp continuous 2px strokes, centered; skill verifier ALL PASS.
 
+## POST-RELEASE: drawing pointer 3rd revision (Pointer2.png)
+Owner dropped `Pointer2.png` (729×729, lighter 1px-weight art vs v2's bold). Same pipeline → all 7 `__CURSOR_DATA__` sprites replaced. Verified: boot clean, sprites pixel-identical to references, resolves at all sizes/themes with correct hotspots, on-canvas loads, 32px-on-dark crisp/centered/continuous; skill verifier ALL PASS.
+
 ## Notes / decisions
 - Never blind-replace "apex": escapeXml + geometric apex (curveApex etc.) + `urn:xmlns:apex:sketch:xml` (format contract) + `.apx/.skx` accept lists all stay. Justification in docs/INTERFACE_INVENTORY.md §2.
 - Keep every id / data-command / data-target / data-sidebar-* intact; JS couplings listed in inventory §4.
