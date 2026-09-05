@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Appraisal Sketch 1.0 - Untitled</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%20width%3D%2232%22%20height%3D%2232%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%230F171B%22%2F%3E%3Cpath%20d%3D%22M16%205%20L27%2024%20H21.5%20L16%2014.4%20L10.5%2024%20H5%20Z%22%20fill%3D%22%2314B8A6%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%229.2%22%20r%3D%221.9%22%20fill%3D%22%2314B8A6%22%2F%3E%3C%2Fsvg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%20width%3D%2232%22%20height%3D%2232%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23007ACC%22%2F%3E%3Cpath%20d%3D%22M16%205%20L27%2024%20H21.5%20L16%2014.4%20L10.5%2024%20H5%20Z%22%20fill%3D%22%23FFFFFF%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%229.2%22%20r%3D%221.9%22%20fill%3D%22%23FFFFFF%22%2F%3E%3C%2Fsvg%3E">
   
   
   
@@ -420,7 +420,7 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
   color: var(--text-muted);
   cursor: pointer;
 }
-.sidebar-pin:hover, .sidebar-pin.active { }
+.sidebar-pin:hover, .sidebar-pin.active { color: #63B3ED; }
 
 .panel-body {
   padding: 8px;
@@ -670,7 +670,8 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
   color: var(--text-muted);
 }
 .hud-state.down {
-  }
+  color: #5DAE84;
+}
 
 .page-indicator {
   display: flex;
@@ -769,7 +770,8 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
 
 .recent-files-title i {
   margin-right: 6px;
-  }
+  color: #63B3ED;
+}
 
 .recent-files-clear {
   background: transparent;
@@ -811,6 +813,7 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
 
 .recent-file-item i {
   font-size: 18px;
+  color: #F6E05E;
   flex-shrink: 0;
 }
 
@@ -970,7 +973,8 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
 
 .calcs-group-header .calcs-area-val {
   font-family: monospace;
-  }
+  color: #63B3ED;
+}
 
 .calcs-group-body {
   display: none;
@@ -999,7 +1003,7 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
 .calcs-area-header i { font-size: 10px; }
 .calcs-area-details { display: none; margin: 2px 0 5px 14px; }
 .calcs-area-node.expanded .calcs-area-details { display: block; }
-.calcs-subtracted .calcs-value { }
+.calcs-subtracted .calcs-value { color: #FC8181; }
 
 .calcs-row {
   display: flex;
@@ -1025,7 +1029,7 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
   padding: 3px 0;
   font-weight: 600;
 }
-.calcs-summary-row .calcs-value { font-family: monospace; font-size: 12px; }
+.calcs-summary-row .calcs-value { font-family: monospace; color: #63B3ED; font-size: 12px; }
 
 .calcs-total-row {
   display: flex;
@@ -1036,7 +1040,7 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
   font-weight: 700;
   font-size: 12px;
 }
-.calcs-total-row .calcs-value { font-family: monospace; font-size: 13px; }
+.calcs-total-row .calcs-value { font-family: monospace; color: #F6E05E; font-size: 13px; }
 
 .panel-ctrl-btn {
   background: transparent;
@@ -1102,7 +1106,7 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
   font-size: 10px;
 }
 .alpha-filter-btn:hover { background: var(--bg-hover); }
-.alpha-filter-btn.active { background: #D69E2E; color: #171717; border-}
+.alpha-filter-btn.active { background: #D69E2E; color: #171717; border-color: #F6AD55; }
 
 .lib-item {
   padding: 5px 8px;
@@ -1116,7 +1120,7 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
   transition: background 0.15s;
 }
 .lib-item:hover { background: var(--bg-hover); border-color: var(--border); }
-.lib-item.active { background: rgba(0, 122, 204, 0.2); border-}
+.lib-item.active { background: rgba(0, 122, 204, 0.2); border-color: #63B3ED; }
 
 .lib-symbol-list {
   display: flex;
@@ -1143,9 +1147,9 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
   gap: 7px;
   transition: background 0.15s;
 }
-.lib-symbol-item i { width: 18px; font-size: 16px; }
+.lib-symbol-item i { width: 18px; font-size: 16px; color: #63B3ED; }
 .lib-symbol-item:hover { background: var(--bg-hover); border-color: var(--border); }
-.lib-symbol-item.active { background: rgba(0, 122, 204, 0.2); border-}
+.lib-symbol-item.active { background: rgba(0, 122, 204, 0.2); border-color: #63B3ED; }
 
 .lib-custom {
   display: flex;
@@ -1202,7 +1206,7 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
   color: var(--text-muted);
   text-align: center;
 }
-.symbol-preview i { font-size: 36px; }
+.symbol-preview i { font-size: 36px; color: #63B3ED; }
 .symbol-preview canvas {
   width: 92px;
   height: 68px;
@@ -1248,7 +1252,7 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
 .manager-alpha button, .sidebar-manager-actions button {
   padding: 5px 8px; border: 1px solid var(--border); border-radius: 2px; background: var(--bg-hover); color: var(--text-main); cursor: pointer;
 }
-.manager-alpha button.active { background: #D69E2E; color: #171717; border-}
+.manager-alpha button.active { background: #D69E2E; color: #171717; border-color: #F6AD55; }
 .sidebar-manager-actions { display: flex; gap: 8px; justify-content: flex-end; }
 
 /* --- Modal dialog (alert / confirm / prompt replacement) --- */
@@ -1333,7 +1337,7 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
 .symbol-organizer-dialog { width: min(560px, calc(100vw - 32px)); }
 .symbol-organizer-list { min-height: 240px; max-height: 420px; overflow: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3px 10px; padding: 6px; border: 1px solid var(--border); background: var(--bg-app); }
 .symbol-organizer-list label { display: flex; align-items: center; gap: 6px; padding: 3px; font-size: 11px; }
-.symbol-organizer-list i { width: 18px; font-size: 16px; }
+.symbol-organizer-list i { width: 18px; color: #63B3ED; font-size: 16px; }
 .property-editor-dialog { width: min(520px, calc(100vw - 32px)); }
 .property-editor-dialog fieldset { border: 1px solid var(--border); padding: 10px; }
 .property-editor-dialog legend { padding: 0 5px; color: var(--text-muted); font-size: 11px; }
@@ -1373,7 +1377,7 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
 .subject-autofill { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .subject-autofill button { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border: 1px solid var(--border); background: var(--bg-hover); color: var(--text-main); cursor: pointer; font-size: 11px; }
 .subject-autofill button:hover { border-color: var(--bg-active); }
-.subject-autofill button i { font-size: 14px; }
+.subject-autofill button i { font-size: 14px; color: #63B3ED; }
 .subject-autofill span { color: var(--text-muted); font-size: 10px; }
 [data-subject-panel="tables"] { grid-template-columns: 1fr 1fr; gap: 10px; }
 [data-subject-panel="tables"].active { display: grid; }
@@ -1449,7 +1453,7 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
 .command-popup, .sketch-context-menu { position:fixed; z-index:3000; min-width:190px; padding:5px; background:var(--bg-panel); border:1px solid var(--border); box-shadow:0 8px 22px rgba(0,0,0,.42); color:var(--text-main); }
 .command-popup button, .sketch-context-menu button { display:flex; width:100%; gap:9px; align-items:center; padding:7px 10px; border:0; background:transparent; color:inherit; text-align:left; cursor:pointer; }
 .command-popup button:hover, .sketch-context-menu button:hover { background:var(--bg-hover); }
-.command-popup button.active span::after, .sketch-context-menu button.active span::after { content: ' ✓'; }
+.command-popup button.active span::after, .sketch-context-menu button.active span::after { content: ' ✓'; color: #63B3ED; }
 .command-popup hr, .sketch-context-menu hr { border:0; border-top:1px solid var(--border); margin:4px; }
 .command-popup.undo-history-popup { max-height: 55vh; overflow-y: auto; }
 .command-popup.undo-history-popup button span { font-size: 11.5px; }
@@ -1624,7 +1628,7 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
 .touch-panel-floating button { flex: 1; cursor: pointer; }
 .touch-distance { width: 100%; padding: 0 8px; }
 .touch-direction-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
-.lib-cat-btn.active { color: var(--text-main); background: rgba(0, 122, 204, 0.2); border-}
+.lib-cat-btn.active { color: var(--text-main); background: rgba(0, 122, 204, 0.2); border-color: #63B3ED; }
 
 
 /* --- Layers Panel --- */
@@ -2124,9 +2128,10 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
 .symbol-manager-selection label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
 .symbol-manager-selection .sm-cat-delete {
   font-size: 10px; padding: 2px 8px; cursor: pointer;
-  background: var(--bg-app); border: 1px solid var(--border); border-radius: 3px;
+  background: var(--bg-app); color: #FC8181;
+  border: 1px solid var(--border); border-radius: 3px;
 }
-.symbol-manager-selection .sm-cat-delete:hover:not(:disabled) { border-}
+.symbol-manager-selection .sm-cat-delete:hover:not(:disabled) { border-color: #FC8181; }
 .symbol-manager-selection .sm-cat-delete:disabled { opacity: 0.4; cursor: default; color: var(--text-muted); }
 
 /* List + docked preview sit side by side; the preview keeps a fixed column so
@@ -2176,7 +2181,7 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
   background: var(--bg-app); color: var(--text-main);
   border: 1px solid var(--border); border-radius: 3px;
 }
-.sm-preview-enlarge:hover:not(:disabled) { border-}
+.sm-preview-enlarge:hover:not(:disabled) { border-color: #63B3ED; color: #63B3ED; }
 .sm-preview-enlarge:disabled { opacity: 0.45; cursor: default; }
 
 /* Narrow windows: drop the preview under the list rather than squeezing both. */
@@ -2198,7 +2203,7 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
 .symbol-manager-row.is-current { background: var(--bg-hover); box-shadow: inset 2px 0 0 #63B3ED; }
 .symbol-manager-row.is-hidden { opacity: 0.6; font-style: italic; }
 .symbol-manager-row .sm-check { cursor: pointer; margin: 0; }
-.symbol-manager-row i { width: 18px; font-size: 16px; text-align: center; }
+.symbol-manager-row i { width: 18px; color: #63B3ED; font-size: 16px; text-align: center; }
 .symbol-manager-row .sm-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .symbol-manager-row .sm-meta { font-size: 10px; color: var(--text-muted); white-space: nowrap; }
 
@@ -2207,11 +2212,11 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
   background: var(--bg-app); color: var(--text-main);
   border: 1px solid var(--border); border-radius: 3px;
 }
-.symbol-manager-row .sm-view:hover { border-}
+.symbol-manager-row .sm-view:hover { border-color: #63B3ED; color: #63B3ED; }
 
 .symbol-manager-dialog .sidebar-manager-actions { flex-wrap: wrap; }
 .symbol-manager-dialog .sidebar-manager-actions button:disabled { opacity: 0.45; cursor: default; }
-.symbol-manager-dialog [data-purge] { }
+.symbol-manager-dialog [data-purge] { color: #FC8181; }
 
 .symbol-viewer-dialog { width: min(420px, calc(100vw - 32px)); text-align: center; }
 .symbol-viewer-dialog canvas {
@@ -2224,293 +2229,66 @@ body.suite-embedded .ribbon-tabs .qat { margin-left: auto; }
 </style>
 <!-- /SYMBOL MANAGER CSS -->
 <style>
-/* ====== INTERFACE SKIN LAYER (2026-09 remodel) ======
-   Independent identity: charcoal/stone surfaces, one teal accent.
-   Appended as its own cascade layer (same pattern as the symbol-manager
-   layer above) so the base stylesheet is never edited. Structure, ids,
-   data-* wiring and canvas drawing colors are untouched. */
+/* ====== FEATURE LAYER (2026-09) ======
+   Command palette, pages navigator, totals chip, save-state pill.
+   Uses the ORIGINAL palette: --bg-active (#007acc) as accent. */
 
-:root {
-  --bg-app: #17191C;
-  --bg-panel: #1D2024;
-  --bg-ribbon: #212429;
-  --bg-canvas: #111111;
-  --bg-hover: #2A2E34;
-  --bg-active: #14B8A6;
-  --accent: #14B8A6;
-  --accent-soft: rgba(20, 184, 166, 0.16);
-  --border: #2E3339;
-  --text-main: #D7DCE2;
-  --text-muted: #8B939E;
-  --grid-color: rgba(255,255,255,0.05);
-  --font-main: 'Segoe UI Variable Text', 'Segoe UI', 'Inter', sans-serif;
-  --radius-s: 5px;
-  --radius-m: 8px;
-}
+:root { --accent: var(--bg-active); --accent-soft: rgba(0, 122, 204, 0.16); }
+body.light-theme { --accent: #1677bd; --accent-soft: rgba(22, 119, 189, 0.14); }
 
-body.blue-theme {
-  --bg-app: #131C28;
-  --bg-panel: #182331;
-  --bg-ribbon: #1C2A3A;
-  --bg-canvas: #0b1728;
-  --bg-hover: #24384E;
-  --border: #2C4258;
-  --text-main: #D5DEE8;
-  --text-muted: #8598AB;
-  --bg-active: #14B8A6;
-  --accent: #14B8A6;
-  --accent-soft: rgba(20, 184, 166, 0.16);
-}
-
-body.light-theme {
-  --bg-app: #ECEEF1;
-  --bg-panel: #F6F7F9;
-  --bg-ribbon: #E4E7EB;
-  --bg-canvas: #ffffff;
-  --bg-hover: #D6DBE1;
-  --bg-active: #0D9488;
-  --accent: #0D9488;
-  --accent-soft: rgba(13, 148, 136, 0.14);
-  --text-main: #22272E;
-  --text-muted: #5C6672;
-  --border: #C3CAD3;
-}
-
-/* ---------- focus visibility ---------- */
 button:focus-visible, [tabindex]:focus-visible, select:focus-visible, input:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
-/* ---------- document bar (title bar + tabs) ---------- */
-.title-bar {
-  background: var(--bg-app);
-  border-bottom: 1px solid var(--border);
-  height: 40px;
-}
-.qat-logo { width: 20px; height: 20px; margin: 0 10px 0 12px; flex: none; }
-.qat-btn {
-  border-radius: var(--radius-s);
-  transition: background-color .12s ease, color .12s ease;
-}
-.qat-btn:hover:not(:disabled) { background: var(--bg-hover); }
-.window-title {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .02em;
-  color: var(--text-main);
-}
-
-/* ---------- tool tabs (was ribbon tab strip) ---------- */
-.ribbon { border-bottom: 1px solid var(--border); }
-.ribbon-tabs {
-  gap: 2px;
-  background: var(--bg-app);
-}
-.tab {
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid transparent;
-  border-radius: 0;
-  color: var(--text-muted);
+.doc-save-state {
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  padding: 10px 14px 8px;
-  transition: color .12s ease, border-color .12s ease;
-}
-.tab:hover { color: var(--text-main); background: transparent; }
-.tab.active {
-  color: var(--text-main);
-  border-bottom-color: var(--accent);
-  border-radius: 0;
-}
-.ribbon .tab.file-tab,
-.ribbon .tab.file-tab:hover,
-.tab.file-tab.active {
-  background: transparent;
-  color: var(--text-main);
-  border-bottom-color: var(--accent);
-}
-.ribbon-content {
-  background: var(--bg-ribbon);
-  border-top: 1px solid var(--border);
-}
-
-/* ---------- command buttons (ribbon) ---------- */
-.ribbon-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: var(--radius-s);
-  color: var(--text-main);
-  transition: background-color .12s ease, border-color .12s ease;
-}
-.ribbon-btn:hover { background: var(--bg-hover); border-color: var(--border); }
-.ribbon-btn i { font-size: 19px; color: var(--text-main) !important; }
-.ribbon-btn span { font-size: 11px; line-height: 1.25; }
-
-/* ---------- file menu ---------- */
-.file-menu {
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-m);
-  box-shadow: 0 12px 32px rgba(0,0,0,.45);
-}
-.file-menu-item, .file-btn {
-  border-radius: var(--radius-s);
-  color: var(--text-main);
-  transition: background-color .1s ease;
-}
-.file-menu-item:hover, .file-btn:hover { background: var(--bg-hover); }
-.file-menu-item i { font-size: 17px; color: var(--text-muted) !important; }
-.file-menu-item:hover i { color: var(--accent) !important; }
-.file-menu-divider { border-bottom: 1px solid var(--border); opacity: .7; }
-.file-menu-submenu {
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-m);
-}
-
-/* ---------- left tool shelf ---------- */
-.toolbar-left {
-  background: var(--bg-app);
-  border-right: 1px solid var(--border);
-  gap: 4px;
-  padding-top: 8px;
-}
-.tool-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: var(--radius-s);
-  color: var(--text-main);
-  transition: background-color .12s ease, border-color .12s ease;
-}
-.tool-btn:hover { background: var(--bg-hover); }
-.tool-btn.active {
-  background: var(--accent-soft);
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.tool-btn i { font-size: 19px; color: inherit !important; }
-
-/* ---------- right inspector (sidebar dock) ---------- */
-.sidebar-dock {
-  background: var(--bg-panel);
-  border-left: 1px solid var(--border);
-}
-.panel {
-  background: var(--bg-panel);
-}
-.panel-header {
-  border-bottom: 1px solid var(--border);
-  color: var(--text-main);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-}
-.sidebar-tabs {
-  background: var(--bg-app);
-  border-top: 1px solid var(--border);
-}
-.sidebar-tab {
-  background: transparent;
-  border: none;
-  border-top: 2px solid transparent;
   color: var(--text-muted);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: .07em;
-  text-transform: uppercase;
-}
-.sidebar-tab:hover { color: var(--text-main); background: var(--bg-hover); }
-.sidebar-tab.active {
-  color: var(--accent);
-  border-top-color: var(--accent);
-  background: transparent;
-}
-.sidebar-pin { color: var(--text-muted); }
-.sidebar-pin.active { color: var(--accent); }
-
-/* ---------- status bar / footer ---------- */
-.status-bar {
-  background: var(--bg-app);
-  border-top: 1px solid var(--border);
-  font-size: 11.5px;
-}
-.status-btn, .page-nav {
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: var(--radius-s);
-  color: var(--text-muted);
-  transition: background-color .12s ease, color .12s ease;
-}
-.status-btn:hover, .page-nav:hover { background: var(--bg-hover); color: var(--text-main); }
-.status-btn.active { color: var(--accent); background: var(--accent-soft); }
-.status-hud, .hud-mono, .scale-info, .scale-input, #page-display, .calcs-value {
-  font-variant-numeric: tabular-nums;
-}
-.hud-mono { color: var(--accent); }
-.north-indicator { color: var(--text-muted); }
-.underlay-select, .snap-pitch-select, .area-status-select {
-  background: var(--bg-panel);
-  color: var(--text-main);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-s);
-}
-
-/* ---------- dialogs ---------- */
-.app-dialog, .sidebar-manager-dialog, .breakdown-dialog, .color-dialog,
-.shortcuts-dialog, .shapes-dialog, .options-dialog, .page-layout-dialog {
   background: var(--bg-panel);
   border: 1px solid var(--border);
-  border-radius: var(--radius-m);
-  box-shadow: 0 16px 48px rgba(0,0,0,.5);
-}
-.sidebar-manager-title, .app-dialog-title {
-  border-bottom: 1px solid var(--border);
-  letter-spacing: .02em;
-}
-.sidebar-manager-actions button, .app-dialog-actions button,
-.options-actions button, .page-layout-actions button, .breakdown-actions button {
-  border-radius: var(--radius-s);
-  transition: background-color .12s ease, border-color .12s ease;
-}
-.sidebar-manager-actions button[type="submit"], .app-dialog-actions button.primary,
-.breakdown-actions button.primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #0C1210;
-}
-.sidebar-manager-actions button[type="submit"]:hover,
-.app-dialog-actions button.primary:hover,
-.breakdown-actions button.primary:hover { filter: brightness(1.08); }
-
-/* ---------- persistent totals chip (M4) ---------- */
-.totals-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-s);
+  border-radius: 999px;
   padding: 2px 10px;
-  font-size: 11.5px;
-  color: var(--text-muted);
+  margin: 0 8px;
   white-space: nowrap;
-  cursor: pointer;
-  transition: border-color .12s ease, color .12s ease;
-}
-.totals-chip:hover { border-color: var(--accent); color: var(--text-main); }
-.totals-chip .totals-gla {
-  color: var(--accent);
-  font-weight: 700;
+  align-self: center;
   font-variant-numeric: tabular-nums;
 }
-.totals-chip .totals-sep { opacity: .45; }
 
-/* ---------- pages navigator (M3) ---------- */
+.command-palette-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 9998; }
+body.light-theme .command-palette-backdrop { background: rgba(40,50,60,.25); }
+.command-palette {
+  position: fixed; top: 12%; left: 50%; transform: translateX(-50%);
+  width: min(520px, 90vw);
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-shadow: 0 18px 60px rgba(0,0,0,.55);
+  z-index: 9999;
+  overflow: hidden;
+}
+.command-palette input {
+  width: 100%;
+  background: var(--bg-app);
+  color: var(--text-main);
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 14px;
+  font-size: 13px;
+  outline: none;
+}
+.command-palette ul { list-style: none; margin: 0; padding: 6px; max-height: 46vh; overflow: auto; }
+.command-palette li {
+  padding: 8px 10px;
+  border-radius: 3px;
+  font-size: 12.5px;
+  color: var(--text-main);
+  display: flex; justify-content: space-between; gap: 12px;
+  cursor: pointer;
+}
+.command-palette li.is-active { background: var(--accent-soft); color: var(--accent); }
+.command-palette li .cp-hint { color: var(--text-muted); font-size: 11px; }
+.command-palette .cp-empty { padding: 14px; color: var(--text-muted); font-size: 12px; text-align: center; }
+
 .pages-nav {
   width: 0;
   overflow: hidden;
@@ -2521,10 +2299,7 @@ button:focus-visible, [tabindex]:focus-visible, select:focus-visible, input:focu
   transition: width .16s ease;
   visibility: hidden;
 }
-body.pages-nav-open .pages-nav {
-  width: 168px;
-  visibility: visible;
-}
+body.pages-nav-open .pages-nav { width: 168px; visibility: visible; }
 .pages-nav-header {
   display: flex;
   align-items: center;
@@ -2542,56 +2317,44 @@ body.pages-nav-open .pages-nav {
   cursor: pointer; font-size: 14px; padding: 2px 4px; border-radius: 4px;
 }
 .pages-nav-close:hover { color: var(--text-main); background: var(--bg-hover); }
-.pages-nav-list {
-  flex: 1 1 auto;
-  overflow-y: auto;
-  padding: 0 6px 6px;
-}
+.pages-nav-list { flex: 1 1 auto; overflow-y: auto; padding: 0 6px 6px; }
 .page-row {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 6px 8px;
   margin-bottom: 2px;
-  border-radius: var(--radius-s);
+  border-radius: 3px;
   font-size: 12px;
   color: var(--text-main);
   cursor: pointer;
   border: 1px solid transparent;
 }
 .page-row:hover { background: var(--bg-hover); }
-.page-row.is-current {
-  background: var(--accent-soft);
-  border-color: var(--accent);
-  color: var(--accent);
-  font-weight: 600;
-}
+.page-row.is-current { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
 .page-row .page-row-label { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .page-row .page-row-ghost {
   font-size: 10px; color: var(--text-muted);
-  border: 1px solid var(--border); border-radius: 4px;
+  border: 1px solid var(--border); border-radius: 3px;
   padding: 1px 5px; flex: none;
+  background: transparent;
 }
 .page-row .page-row-ghost.on { color: var(--accent); border-color: var(--accent); }
 .page-row .page-row-del {
   background: transparent; border: none; color: var(--text-muted);
-  cursor: pointer; font-size: 13px; padding: 2px; border-radius: 4px; flex: none;
+  cursor: pointer; font-size: 13px; padding: 2px; border-radius: 3px; flex: none;
   display: none;
 }
 .page-row:hover .page-row-del { display: inline-flex; }
 .page-row .page-row-del:hover { color: #FC8181; }
 .page-row .page-row-del:disabled { opacity: .3; cursor: default; }
-.pages-nav-footer {
-  flex: none;
-  padding: 8px;
-  border-top: 1px solid var(--border);
-}
+.pages-nav-footer { flex: none; padding: 8px; border-top: 1px solid var(--border); }
 .pages-nav-footer select {
   width: 100%;
   background: var(--bg-app);
   color: var(--text-main);
   border: 1px solid var(--border);
-  border-radius: var(--radius-s);
+  border-radius: 3px;
   font-size: 11.5px;
   padding: 4px 6px;
 }
@@ -2601,7 +2364,24 @@ body.pages-nav-open .tool-btn#tool-pages {
   color: var(--accent);
 }
 
-/* ---------- native controls & panel selects ---------- */
+.totals-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 2px 10px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color .12s ease, color .12s ease;
+}
+.totals-chip:hover { border-color: var(--accent); color: var(--text-main); }
+.totals-chip .totals-gla { color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
+.totals-chip .totals-sep { opacity: .45; }
+
 :root { color-scheme: dark; }
 body.light-theme { color-scheme: light; }
 input[type="checkbox"], input[type="radio"], input[type="range"], input[type="color"], progress {
@@ -2615,7 +2395,7 @@ input[type="checkbox"], input[type="radio"], input[type="range"], input[type="co
   background: var(--bg-app);
   color: var(--text-main);
   border: 1px solid var(--border);
-  border-radius: var(--radius-s);
+  border-radius: 3px;
 }
 .panel select:focus, .auto-post select:focus,
 .options-body select:focus, .subject-panel select:focus {
@@ -2623,9 +2403,8 @@ input[type="checkbox"], input[type="radio"], input[type="range"], input[type="co
   border-color: var(--accent);
 }
 select option { background: var(--bg-panel); color: var(--text-main); }
-body.light-theme select option { background: #fff; color: #22272E; }
+body.light-theme select option { background: #ffffff; color: #20252b; }
 
-/* ---------- scrollbars ---------- */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
@@ -2636,16 +2415,6 @@ body.light-theme select option { background: #fff; color: #22272E; }
 }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--text-muted); }
 
-/* ---------- embed mode (title bar re-parented) ---------- */
-body.suite-embedded .ribbon-tabs .qat-btn {
-  width: 26px; height: 26px;
-}
-body.suite-embedded .window-title {
-  font-size: 11.5px;
-  margin-right: 8px;
-}
-
-/* ---------- tool shelf groups (M2) ---------- */
 .toolbar-left .tool-btn:nth-child(5),
 .toolbar-left .tool-btn:nth-child(9),
 .toolbar-left .tool-btn:nth-child(11),
@@ -2663,64 +2432,6 @@ body.suite-embedded .window-title {
   height: 1px;
   background: var(--border);
 }
-
-/* ---------- document bar: save-state pill + command search (M2) ---------- */
-.doc-save-state {
-  font-size: 11px;
-  color: var(--text-muted);
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 2px 10px;
-  margin: 0 8px;
-  white-space: nowrap;
-  align-self: center;
-  font-variant-numeric: tabular-nums;
-}
-body:not(.suite-embedded) #command-palette-btn { margin-left: auto; }
-
-/* ---------- command palette (M2) ---------- */
-.command-palette-backdrop {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,.35);
-  z-index: 9998;
-}
-body.light-theme .command-palette-backdrop { background: rgba(40,50,60,.25); }
-.command-palette {
-  position: fixed; top: 12%; left: 50%; transform: translateX(-50%);
-  width: min(520px, 90vw);
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-m);
-  box-shadow: 0 18px 60px rgba(0,0,0,.55);
-  z-index: 9999;
-  overflow: hidden;
-}
-.command-palette input {
-  width: 100%;
-  background: var(--bg-app);
-  color: var(--text-main);
-  border: none;
-  border-bottom: 1px solid var(--border);
-  padding: 12px 14px;
-  font-size: 13px;
-  outline: none;
-}
-.command-palette ul {
-  list-style: none; margin: 0; padding: 6px;
-  max-height: 46vh; overflow: auto;
-}
-.command-palette li {
-  padding: 8px 10px;
-  border-radius: var(--radius-s);
-  font-size: 12.5px;
-  color: var(--text-main);
-  display: flex; justify-content: space-between; gap: 12px;
-  cursor: pointer;
-}
-.command-palette li.is-active { background: var(--accent-soft); color: var(--accent); }
-.command-palette li .cp-hint { color: var(--text-muted); font-size: 11px; }
-.command-palette .cp-empty { padding: 14px; color: var(--text-muted); font-size: 12px; text-align: center; }
 </style>
 </head>
 <body class="dark-theme">
@@ -2728,7 +2439,7 @@ body.light-theme .command-palette-backdrop { background: rgba(40,50,60,.25); }
   <!-- Title Bar & QAT -->
   <div class="title-bar">
     <div class="qat">
-      <svg class="qat-logo" viewBox="0 0 32 32" width="20" height="20" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#0F171B"/><path d="M16 5 L27 24 H21.5 L16 14.4 L10.5 24 H5 Z" fill="#14B8A6"/><circle cx="16" cy="9.2" r="1.9" fill="#14B8A6"/></svg>
+      <svg class="qat-logo" viewBox="0 0 32 32" width="20" height="20" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#007ACC"/><path d="M16 5 L27 24 H21.5 L16 14.4 L10.5 24 H5 Z" fill="#FFFFFF"/><circle cx="16" cy="9.2" r="1.9" fill="#FFFFFF"/></svg>
       <button class="qat-btn" data-command="save" title="Save (F2)" aria-label="Save"><i class="ph-fill ph-floppy-disk"></i></button>
       <button class="qat-btn" data-command="undo" title="Undo (Ctrl+Z)" aria-label="Undo" disabled><i class="ph ph-arrow-u-up-left"></i></button>
       <button class="qat-btn" data-command="redo" title="Redo (Ctrl+Y)" aria-label="Redo" disabled><i class="ph ph-arrow-u-up-right"></i></button>
@@ -2958,7 +2669,6 @@ body.light-theme .command-palette-backdrop { background: rgba(40,50,60,.25); }
           });
           list.appendChild(row);
         });
-        // mirror of updatePageDisplay's underlay options
         if (underlay) {
           underlay.innerHTML = '';
           var none = document.createElement('option');
@@ -2992,8 +2702,6 @@ body.light-theme .command-palette-backdrop { background: rgba(40,50,60,.25); }
       }
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
       else boot();
-      // The app instantiates on window load (after DOMContentLoaded), so the
-      // first render must also run after the load event.
       window.addEventListener('load', function () {
         // Defer past the app's own onload handler so window.app exists.
         setTimeout(render, 0);
@@ -3008,95 +2716,95 @@ body.light-theme .command-palette-backdrop { background: rgba(40,50,60,.25); }
     <!-- Home Tab -->
     <div class="ribbon-content active-content" id="tab-home">
       <div class="ribbon-group">
-        <button class="ribbon-btn" data-command="cut"><i class="ph ph-scissors"></i><span>Cut</span></button>
-        <button class="ribbon-btn" data-command="copy"><i class="ph ph-copy"></i><span>Copy</span></button>
-        <button class="ribbon-btn" data-command="paste"><i class="ph ph-clipboard-text"></i><span>Paste</span></button>
-        <button class="ribbon-btn" data-command="select-all"><i class="ph ph-selection-all"></i><span>Select All</span></button>
-        <button class="ribbon-btn" data-command="select-by-type"><i class="ph-fill ph-intersect"></i><span>Select <i class="ph-fill ph-caret-down" style="font-size:8px; margin:0;"></i></span></button>
-        <button class="ribbon-btn" data-command="delete-selected"><i class="ph ph-x" style="font-weight: bold;"></i><span>Delete</span></button>
+        <button class="ribbon-btn" data-command="cut"><i class="ph ph-scissors" style="color: #63B3ED;"></i><span>Cut</span></button>
+        <button class="ribbon-btn" data-command="copy"><i class="ph ph-copy" style="color: #F6AD55;"></i><span>Copy</span></button>
+        <button class="ribbon-btn" data-command="paste"><i class="ph ph-clipboard-text" style="color: #F6AD55;"></i><span>Paste</span></button>
+        <button class="ribbon-btn" data-command="select-all"><i class="ph ph-selection-all" style="color: #63B3ED;"></i><span>Select All</span></button>
+        <button class="ribbon-btn" data-command="select-by-type"><i class="ph-fill ph-intersect" style="color: #63B3ED;"></i><span>Select <i class="ph-fill ph-caret-down" style="font-size:8px; margin:0;"></i></span></button>
+        <button class="ribbon-btn" data-command="delete-selected"><i class="ph ph-x" style="color: #FC8181; font-weight: bold;"></i><span>Delete</span></button>
         <button class="ribbon-btn" data-command="undo" title="Undo (Ctrl+Z)" disabled><i class="ph ph-arrow-u-up-left"></i><span>Undo</span></button>
         <button class="ribbon-btn" data-command="redo" title="Redo (Ctrl+Y)" disabled><i class="ph ph-arrow-u-up-right"></i><span>Redo</span></button>
-        <button class="ribbon-btn" data-command="rotate-sketch"><i class="ph ph-arrow-clockwise"></i><span>Rotate<br>Sketch</span></button>
+        <button class="ribbon-btn" data-command="rotate-sketch"><i class="ph ph-arrow-clockwise" style="color: #63B3ED;"></i><span>Rotate<br>Sketch</span></button>
         <button class="ribbon-btn" data-command="flip-sketch"><i class="ph ph-arrows-left-right"></i><span>Flip Sketch <i class="ph-fill ph-caret-down" style="font-size:8px; margin:0;"></i></span></button>
       </div>
       <div class="ribbon-divider"></div>
       <div class="ribbon-group">
-        <button class="ribbon-btn" data-command="draw-color"><i class="ph ph-pencil-simple"></i><span>Draw Color <i class="ph-fill ph-caret-down" style="font-size:8px; margin:0;"></i></span></button>
+        <button class="ribbon-btn" data-command="draw-color"><i class="ph ph-pencil-simple" style="color: #F6AD55;"></i><span>Draw Color <i class="ph-fill ph-caret-down" style="font-size:8px; margin:0;"></i></span></button>
         <input type="color" id="draw-color-input" value="#3182CE" hidden>
       </div>
       <div class="ribbon-divider"></div>
       <div class="ribbon-group">
-        <button class="ribbon-btn" data-command="subject-info"><i class="ph ph-house-line"></i><span>Subject Info</span></button>
-        <button class="ribbon-btn" data-command="area-attributes"><i class="ph ph-list-dashes"></i><span>Area<br>Attributes</span></button>
+        <button class="ribbon-btn" data-command="subject-info"><i class="ph ph-house-line" style="color: #63B3ED;"></i><span>Subject Info</span></button>
+        <button class="ribbon-btn" data-command="area-attributes"><i class="ph ph-list-dashes" style="color: #A0AEC0;"></i><span>Area<br>Attributes</span></button>
       </div>
     </div>
 
     <!-- View Tab -->
     <div class="ribbon-content" id="tab-view" style="display: none;">
       <div class="ribbon-group">
-        <button class="ribbon-btn" data-command="mini-map"><i class="ph ph-map-trifold"></i><span>Mini-Map</span></button>
-        <button class="ribbon-btn" data-command="toggle-calcs"><i class="ph-fill ph-calculator"></i><span>View<br>Calcs</span></button>
+        <button class="ribbon-btn" data-command="mini-map"><i class="ph ph-map-trifold" style="color: #63B3ED;"></i><span>Mini-Map</span></button>
+        <button class="ribbon-btn" data-command="toggle-calcs"><i class="ph-fill ph-calculator" style="color: #F6AD55;"></i><span>View<br>Calcs</span></button>
       </div>
       <div class="ribbon-divider"></div>
       <div class="ribbon-group">
         <button class="ribbon-btn" data-command="page-prev"><span class="page-step-icon previous" aria-hidden="true"><i class="ph ph-file"></i><i class="ph-fill ph-caret-left step-arrow"></i></span><span>Previous</span></button>
         <button class="ribbon-btn" data-command="page-next"><span class="page-step-icon next" aria-hidden="true"><i class="ph ph-file"></i><i class="ph-fill ph-caret-right step-arrow"></i></span><span>Next</span></button>
         <div style="display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 0 4px;">
-          <button data-command="page-first" style="background:transparent; border:none; color:var(--text-main); display:flex; align-items:center; gap:4px; cursor:pointer; font-size:11px;"><i class="ph-fill ph-caret-line-left" style="font-size: 16px;"></i> First Page</button>
-          <button data-command="page-last" style="background:transparent; border:none; color:var(--text-main); display:flex; align-items:center; gap:4px; cursor:pointer; font-size:11px;"><i class="ph-fill ph-caret-line-right" style="font-size: 16px;"></i> Last Page</button>
+          <button data-command="page-first" style="background:transparent; border:none; color:var(--text-main); display:flex; align-items:center; gap:4px; cursor:pointer; font-size:11px;"><i class="ph-fill ph-caret-line-left" style="color: #63B3ED; font-size: 16px;"></i> First Page</button>
+          <button data-command="page-last" style="background:transparent; border:none; color:var(--text-main); display:flex; align-items:center; gap:4px; cursor:pointer; font-size:11px;"><i class="ph-fill ph-caret-line-right" style="color: #63B3ED; font-size: 16px;"></i> Last Page</button>
         </div>
-        <button class="ribbon-btn" data-command="page-add"><i class="ph ph-file-plus"></i><span>Add</span></button>
-        <button class="ribbon-btn" data-command="page-delete"><i class="ph ph-file-minus"></i><span>Delete</span></button>
+        <button class="ribbon-btn" data-command="page-add"><i class="ph ph-file-plus" style="color: #5DAE84;"></i><span>Add</span></button>
+        <button class="ribbon-btn" data-command="page-delete"><i class="ph ph-file-minus" style="color: #FC8181;"></i><span>Delete</span></button>
       </div>
       <div class="ribbon-divider"></div>
       <div class="ribbon-group">
-        <button class="ribbon-btn" data-command="toggle-canvas-background" title="Choose the drawing background: White, Dark, or Blue"><i class="ph ph-circle-half-tilt"></i><span>Background <i class="ph-fill ph-caret-down" style="font-size:8px; margin:0;"></i></span></button>
-        <button class="ribbon-btn" data-command="interface-theme" title="Switch the interface between Light, Dark, and Blue"><i class="ph ph-monitor"></i><span>Interface <i class="ph-fill ph-caret-down" style="font-size:8px; margin:0;"></i></span></button>
-        <button class="ribbon-btn" data-command="cycle-dimensions"><i class="ph ph-check-circle"></i><span>Apply <i class="ph-fill ph-caret-down" style="font-size:8px; margin:0;"></i></span></button>
-        <button class="ribbon-btn" data-command="toggle-grid" style="background: rgba(0, 122, 204, 0.2); border: 1px solid var(--border);"><i class="ph ph-grid-four"></i><span>Grid</span></button>
-        <button class="ribbon-btn" data-command="filter"><i class="ph ph-funnel"></i><span>Filter</span></button>
+        <button class="ribbon-btn" data-command="toggle-canvas-background" title="Choose the drawing background: White, Dark, or Blue"><i class="ph ph-circle-half-tilt" style="color: #63B3ED;"></i><span>Background <i class="ph-fill ph-caret-down" style="font-size:8px; margin:0;"></i></span></button>
+        <button class="ribbon-btn" data-command="interface-theme" title="Switch the interface between Light, Dark, and Blue"><i class="ph ph-monitor" style="color: #5DAE84;"></i><span>Interface <i class="ph-fill ph-caret-down" style="font-size:8px; margin:0;"></i></span></button>
+        <button class="ribbon-btn" data-command="cycle-dimensions"><i class="ph ph-check-circle" style="color: #5DAE84;"></i><span>Apply <i class="ph-fill ph-caret-down" style="font-size:8px; margin:0;"></i></span></button>
+        <button class="ribbon-btn" data-command="toggle-grid" style="background: rgba(0, 122, 204, 0.2); border: 1px solid var(--border);"><i class="ph ph-grid-four" style="color: #63B3ED;"></i><span>Grid</span></button>
+        <button class="ribbon-btn" data-command="filter"><i class="ph ph-funnel" style="color: #F6AD55;"></i><span>Filter</span></button>
       </div>
     </div>
 
     <!-- Tools Tab -->
     <div class="ribbon-content" id="tab-tools" style="display: none;">
       <div class="ribbon-group">
-        <button class="ribbon-btn" data-command="disto-connect"><i class="ph-fill ph-bluetooth-connected"></i><span>Connect</span></button>
-        <button class="ribbon-btn" id="disto-status" disabled><i class="ph-fill ph-bluetooth"></i><span>Disconnected</span></button>
+        <button class="ribbon-btn" data-command="disto-connect"><i class="ph-fill ph-bluetooth-connected" style="color: #5DAE84;"></i><span>Connect</span></button>
+        <button class="ribbon-btn" id="disto-status" disabled><i class="ph-fill ph-bluetooth" style="color: #A0AEC0;"></i><span>Disconnected</span></button>
       </div>
       <div class="ribbon-divider"></div>
       <div class="ribbon-group">
-        <button class="ribbon-btn" data-command="options"><i class="ph-fill ph-gear"></i><span>Options</span></button>
-        <button class="ribbon-btn" data-command="area-breakdown"><i class="ph-fill ph-calculator"></i><span>Area<br>Breakdown</span></button>
-        <button class="ribbon-btn" data-command="area-code-settings"><i class="ph ph-list-numbers"></i><span>Area<br>Codes</span></button>
+        <button class="ribbon-btn" data-command="options"><i class="ph-fill ph-gear" style="color: #63B3ED;"></i><span>Options</span></button>
+        <button class="ribbon-btn" data-command="area-breakdown"><i class="ph-fill ph-calculator" style="color: #F6AD55;"></i><span>Area<br>Breakdown</span></button>
+        <button class="ribbon-btn" data-command="area-code-settings"><i class="ph ph-list-numbers" style="color: #63B3ED;"></i><span>Area<br>Codes</span></button>
       </div>
     </div>
 
     <!-- Reference Image Tab -->
     <div class="ribbon-content" id="tab-photometrics" style="display: none;">
       <div class="ribbon-group">
-        <button class="ribbon-btn" id="btn-photo-load"><i class="ph ph-file-image"></i><span>Load<br>Image</span></button>
+        <button class="ribbon-btn" id="btn-photo-load"><i class="ph ph-file-image" style="color: #5DAE84;"></i><span>Load<br>Image</span></button>
         <input type="file" id="photo-file-input" accept="image/*" style="display:none;">
         <div style="display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 0 4px;">
-          <button id="btn-photo-show" style="background:transparent; border:none; color:var(--text-main); display:flex; align-items:center; gap:6px; cursor:pointer; font-size:11px;"><i class="ph-fill ph-eye" style="font-size: 16px;"></i> Show Image</button>
-          <button id="btn-photo-hide" style="background:transparent; border:none; color:var(--text-main); display:flex; align-items:center; gap:6px; cursor:pointer; font-size:11px;"><i class="ph-fill ph-eye-slash" style="font-size: 16px;"></i> Hide Image</button>
+          <button id="btn-photo-show" style="background:transparent; border:none; color:var(--text-main); display:flex; align-items:center; gap:6px; cursor:pointer; font-size:11px;"><i class="ph-fill ph-eye" style="color: #F6AD55; font-size: 16px;"></i> Show Image</button>
+          <button id="btn-photo-hide" style="background:transparent; border:none; color:var(--text-main); display:flex; align-items:center; gap:6px; cursor:pointer; font-size:11px;"><i class="ph-fill ph-eye-slash" style="color: #FC8181; font-size: 16px;"></i> Hide Image</button>
         </div>
-        <button class="ribbon-btn" id="btn-photo-remove"><i class="ph ph-file-x"></i><span>Remove<br>Image</span></button>
+        <button class="ribbon-btn" id="btn-photo-remove"><i class="ph ph-file-x" style="color: #FC8181;"></i><span>Remove<br>Image</span></button>
       </div>
       <div class="ribbon-divider"></div>
       <div class="ribbon-group">
-        <button class="ribbon-btn" id="btn-photo-set-scale"><i class="ph ph-ruler"></i><span>Set<br>Scale</span></button>
-        <button class="ribbon-btn" id="btn-photo-smaller"><i class="ph ph-arrows-in"></i><span>Image<br>Smaller</span></button>
-        <button class="ribbon-btn" id="btn-photo-larger"><i class="ph ph-arrows-out"></i><span>Image<br>Larger</span></button>
+        <button class="ribbon-btn" id="btn-photo-set-scale"><i class="ph ph-ruler" style="color: #F6AD55;"></i><span>Set<br>Scale</span></button>
+        <button class="ribbon-btn" id="btn-photo-smaller"><i class="ph ph-arrows-in" style="color: #63B3ED;"></i><span>Image<br>Smaller</span></button>
+        <button class="ribbon-btn" id="btn-photo-larger"><i class="ph ph-arrows-out" style="color: #63B3ED;"></i><span>Image<br>Larger</span></button>
         <div style="display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 0 4px;">
-          <button id="btn-photo-rotate-left" style="background:transparent; border:none; color:var(--text-main); display:flex; align-items:center; gap:6px; cursor:pointer; font-size:11px;"><i class="ph-fill ph-arrow-counter-clockwise" style="font-size: 16px;"></i> Rotate Left</button>
-          <button id="btn-photo-rotate-right" style="background:transparent; border:none; color:var(--text-main); display:flex; align-items:center; gap:6px; cursor:pointer; font-size:11px;"><i class="ph-fill ph-arrow-clockwise" style="font-size: 16px;"></i> Rotate Right</button>
+          <button id="btn-photo-rotate-left" style="background:transparent; border:none; color:var(--text-main); display:flex; align-items:center; gap:6px; cursor:pointer; font-size:11px;"><i class="ph-fill ph-arrow-counter-clockwise" style="color: #63B3ED; font-size: 16px;"></i> Rotate Left</button>
+          <button id="btn-photo-rotate-right" style="background:transparent; border:none; color:var(--text-main); display:flex; align-items:center; gap:6px; cursor:pointer; font-size:11px;"><i class="ph-fill ph-arrow-clockwise" style="color: #63B3ED; font-size: 16px;"></i> Rotate Right</button>
         </div>
-        <button class="ribbon-btn" id="btn-photo-edit-mode" data-command="photo-edit"><i class="ph ph-pencil-simple"></i><span>Edit<br>Mode</span></button>
-        <button class="ribbon-btn" id="btn-photo-orient" data-command="photo-orient"><i class="ph ph-crop"></i><span>Orient<br>Guide</span></button>
+        <button class="ribbon-btn" id="btn-photo-edit-mode" data-command="photo-edit"><i class="ph ph-pencil-simple" style="color: #F6AD55;"></i><span>Edit<br>Mode</span></button>
+        <button class="ribbon-btn" id="btn-photo-orient" data-command="photo-orient"><i class="ph ph-crop" style="color: #F6AD55;"></i><span>Orient<br>Guide</span></button>
         <div style="display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 0 4px;">
-          <button id="btn-photo-flip-h" style="background:transparent; border:none; color:var(--text-main); display:flex; align-items:center; gap:6px; cursor:pointer; font-size:11px;"><i class="ph ph-arrows-left-right" style="font-size: 14px;"></i> Horizontal</button>
-          <button id="btn-photo-flip-v" style="background:transparent; border:none; color:var(--text-main); display:flex; align-items:center; gap:6px; cursor:pointer; font-size:11px;"><i class="ph ph-arrows-down-up" style="font-size: 14px;"></i> Vertical</button>
+          <button id="btn-photo-flip-h" style="background:transparent; border:none; color:var(--text-main); display:flex; align-items:center; gap:6px; cursor:pointer; font-size:11px;"><i class="ph ph-arrows-left-right" style="color: #FC8181; font-size: 14px;"></i> Horizontal</button>
+          <button id="btn-photo-flip-v" style="background:transparent; border:none; color:var(--text-main); display:flex; align-items:center; gap:6px; cursor:pointer; font-size:11px;"><i class="ph ph-arrows-down-up" style="color: #FC8181; font-size: 14px;"></i> Vertical</button>
         </div>
         <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 12px; gap: 4px;">
           <div style="display: flex; align-items: center; gap: 4px; color: var(--text-muted); font-size: 14px;">
@@ -3107,19 +2815,19 @@ body.light-theme .command-palette-backdrop { background: rgba(40,50,60,.25); }
       </div>
       <div class="ribbon-divider"></div>
       <div class="ribbon-group">
-        <button class="ribbon-btn" data-command="geo"><i class="ph-fill ph-map-pin"></i><span>Geo <i class="ph-fill ph-caret-down" style="font-size:8px; margin:0;"></i></span></button>
+        <button class="ribbon-btn" data-command="geo"><i class="ph-fill ph-map-pin" style="color: #F6AD55;"></i><span>Geo <i class="ph-fill ph-caret-down" style="font-size:8px; margin:0;"></i></span></button>
       </div>
     </div>
 
     <!-- Help Tab -->
     <div class="ribbon-content" id="tab-help" style="display: none;">
       <div class="ribbon-group">
-        <button class="ribbon-btn" data-command="shortcuts" title="Keyboard Shortcuts (F1)"><i class="ph ph-keyboard"></i><span>Keyboard<br>Shortcuts</span></button>
+        <button class="ribbon-btn" data-command="shortcuts" title="Keyboard Shortcuts (F1)"><i class="ph ph-keyboard" style="color: #63B3ED;"></i><span>Keyboard<br>Shortcuts</span></button>
       </div>
       <div class="ribbon-divider"></div>
       <div class="ribbon-group">
-        <button class="ribbon-btn" data-command="activate-module"><i class="ph-fill ph-puzzle-piece"></i><span>Activate<br>Module</span></button>
-        <button class="ribbon-btn" data-command="deactivate-module"><i class="ph-fill ph-puzzle-piece"></i><span>Deactivate<br>Module</span></button>
+        <button class="ribbon-btn" data-command="activate-module"><i class="ph-fill ph-puzzle-piece" style="color: #F6AD55;"></i><span>Activate<br>Module</span></button>
+        <button class="ribbon-btn" data-command="deactivate-module"><i class="ph-fill ph-puzzle-piece" style="color: #A0AEC0;"></i><span>Deactivate<br>Module</span></button>
       </div>
     </div>
 
@@ -3177,46 +2885,46 @@ body.light-theme .command-palette-backdrop { background: rgba(40,50,60,.25); }
   <div class="file-menu" id="file-menu" style="display: none;">
     <div class="file-menu-left">
       <div class="file-menu-items">
-        <button class="file-menu-item" id="file-new"><i class="ph ph-file"></i> <span>New</span></button>
-        <button class="file-menu-item" id="file-open"><i class="ph-fill ph-folder-open"></i> <span>Open...</span></button>
+        <button class="file-menu-item" id="file-new"><i class="ph ph-file" style="color:#F6E05E;"></i> <span>New</span></button>
+        <button class="file-menu-item" id="file-open"><i class="ph-fill ph-folder-open" style="color:#F6AD55;"></i> <span>Open...</span></button>
         <input type="file" id="file-open-input" accept=".skx,.apx,.json,.sketch" style="display:none;">
-        <button class="file-menu-item" id="file-save"><i class="ph-fill ph-floppy-disk"></i> <span>Save</span></button>
+        <button class="file-menu-item" id="file-save"><i class="ph-fill ph-floppy-disk" style="color:#63B3ED;"></i> <span>Save</span></button>
         <button class="file-menu-item" id="file-save-as">
           <div style="position:relative; width:20px; height:20px;">
-            <i class="ph-fill ph-floppy-disk" style="font-size:20px;"></i>
-            <i class="ph-fill ph-pencil-simple" style="position:absolute; right:-4px; bottom:-4px; font-size:12px;"></i>
+            <i class="ph-fill ph-floppy-disk" style="color:#5DAE84; font-size:20px;"></i>
+            <i class="ph-fill ph-pencil-simple" style="color:#F6AD55; position:absolute; right:-4px; bottom:-4px; font-size:12px;"></i>
           </div>
           <span>Save As...</span>
         </button>
         <div class="file-menu-divider"></div>
-        <button class="file-menu-item" id="file-import"><i class="ph-fill ph-arrow-square-in"></i> <span>Import...</span></button>
+        <button class="file-menu-item" id="file-import"><i class="ph-fill ph-arrow-square-in" style="color:#F6AD55;"></i> <span>Import...</span></button>
         <input type="file" id="file-import-input" accept=".skx,.apx,.json,.sketch" style="display:none;">
-        <button class="file-menu-item" id="file-export-png"><i class="ph-fill ph-arrow-square-out"></i> <span>Export as PNG</span></button>
-        <button class="file-menu-item" id="file-export-svg"><i class="ph-fill ph-vector-two"></i> <span>Export as SVG</span></button>
-        <button class="file-menu-item" id="file-export-dxf"><i class="ph-fill ph-blueprint"></i> <span>Export as DXF</span></button>
-        <button class="file-menu-item" id="file-export-pdf"><i class="ph-fill ph-file-pdf"></i> <span>Export as PDF</span></button>
+        <button class="file-menu-item" id="file-export-png"><i class="ph-fill ph-arrow-square-out" style="color:#63B3ED;"></i> <span>Export as PNG</span></button>
+        <button class="file-menu-item" id="file-export-svg"><i class="ph-fill ph-vector-two" style="color:#68D391;"></i> <span>Export as SVG</span></button>
+        <button class="file-menu-item" id="file-export-dxf"><i class="ph-fill ph-blueprint" style="color:#B794F4;"></i> <span>Export as DXF</span></button>
+        <button class="file-menu-item" id="file-export-pdf"><i class="ph-fill ph-file-pdf" style="color:#FC8181;"></i> <span>Export as PDF</span></button>
         <div class="file-menu-divider"></div>
-        <button class="file-menu-item" data-command="email"><i class="ph-fill ph-envelope-simple"></i> <span>Email...</span></button>
+        <button class="file-menu-item" data-command="email"><i class="ph-fill ph-envelope-simple" style="color:#F6AD55;"></i> <span>Email...</span></button>
         <div class="file-menu-divider"></div>
         <button class="file-menu-item" id="file-recent">
-          <i class="ph-fill ph-clock-counter-clockwise"></i>
+          <i class="ph-fill ph-clock-counter-clockwise" style="color:#63B3ED;"></i>
           <span>Recent Files</span>
           <i class="ph ph-caret-right" style="margin-left:auto; font-size:14px;"></i>
         </button>
         <div class="file-menu-divider"></div>
-        <button class="file-menu-item" data-command="print"><i class="ph-fill ph-printer"></i> <span>Print...</span></button>
+        <button class="file-menu-item" data-command="print"><i class="ph-fill ph-printer" style="color:#A0AEC0;"></i> <span>Print...</span></button>
         <button class="file-menu-item" data-command="print-preview">
           <div style="position:relative; width:20px; height:20px;">
-            <i class="ph-fill ph-printer" style="font-size:20px;"></i>
-            <i class="ph-fill ph-eye" style="position:absolute; right:-4px; bottom:-4px; font-size:12px;"></i>
+            <i class="ph-fill ph-printer" style="color:#A0AEC0; font-size:20px;"></i>
+            <i class="ph-fill ph-eye" style="color:#F6AD55; position:absolute; right:-4px; bottom:-4px; font-size:12px;"></i>
           </div>
           <span>Print Preview...</span>
         </button>
-        <button class="file-menu-item" data-command="page-layout"><i class="ph ph-layout"></i> <span>Page Layout</span></button>
+        <button class="file-menu-item" data-command="page-layout"><i class="ph ph-layout" style="color:#63B3ED;"></i> <span>Page Layout</span></button>
       </div>
       <div class="file-menu-footer">
-        <button class="file-btn" data-command="options"><i class="ph-fill ph-gear"></i> Options</button>
-        <button class="file-btn" data-command="exit"><i class="ph-fill ph-power"></i> Exit</button>
+        <button class="file-btn" data-command="options"><i class="ph-fill ph-gear" style="color:#63B3ED;"></i> Options</button>
+        <button class="file-btn" data-command="exit"><i class="ph-fill ph-power" style="color:#FC8181;"></i> Exit</button>
       </div>
     </div>
     <div class="file-menu-submenu" id="file-recent-submenu" style="display: none;">
@@ -3240,15 +2948,15 @@ body.light-theme .command-palette-backdrop { background: rgba(40,50,60,.25); }
       <button class="tool-btn" id="tool-pan" title="Pan"><i class="ph ph-arrows-out-cardinal"></i></button>
       <button class="tool-btn" id="tool-draw-exterior" title="Draw Exterior">
         <div style="position:relative; width:18px; height:18px;">
-          <i class="ph ph-polygon" style="font-size:18px; "></i>
-          <i class="ph-fill ph-pencil-simple" style="font-size:12px; position:absolute; right:-4px; bottom:-4px; transform: rotate(-45deg);"></i>
+          <i class="ph ph-polygon" style="font-size:18px; color: #63B3ED;"></i>
+          <i class="ph-fill ph-pencil-simple" style="font-size:12px; color: #F6AD55; position:absolute; right:-4px; bottom:-4px; transform: rotate(-45deg);"></i>
         </div>
         <span class="tool-caret" aria-label="Exterior wall shapes">▸</span>
       </button>
       <button class="tool-btn" id="tool-draw-interior" title="Draw Interior">
         <div style="position:relative; width:18px; height:18px;">
-          <i class="ph ph-square-split-vertical" style="font-size:18px; "></i>
-          <i class="ph-fill ph-pencil-simple" style="font-size:12px; position:absolute; right:-4px; bottom:-4px; transform: rotate(-45deg);"></i>
+          <i class="ph ph-square-split-vertical" style="font-size:18px; color: #A0AEC0;"></i>
+          <i class="ph-fill ph-pencil-simple" style="font-size:12px; color: #F6AD55; position:absolute; right:-4px; bottom:-4px; transform: rotate(-45deg);"></i>
         </div>
         <span class="tool-caret" aria-label="Interior wall shapes">▸</span>
       </button>
@@ -3257,11 +2965,11 @@ body.light-theme .command-palette-backdrop { background: rgba(40,50,60,.25); }
       <button class="tool-btn" id="tool-measure" title="Measure: chain legs, close for area, Shift locks 45&deg;"><i class="ph ph-ruler"></i></button>
       <button class="tool-btn" id="tool-chain-dim" title="Chain Dimensions"><i class="ph ph-arrows-horizontal"></i></button>
       <button class="tool-btn" id="tool-shapes" title="Insert Room Shape"><i class="ph ph-square"></i></button>
-      <button class="tool-btn" id="tool-define-area" title="Area Definition Library"><i class="ph ph-bounding-box"></i></button>
+      <button class="tool-btn" id="tool-define-area" title="Area Definition Library"><i class="ph ph-bounding-box" style="color: #FC8181;"></i></button>
       <button class="tool-btn" id="tool-text" title="Text Library"><i class="ph ph-text-t"></i></button>
       <button class="tool-btn" id="tool-symbols" title="Symbol Library"><i class="ph ph-couch"></i></button>
-      <button class="tool-btn" id="tool-touch" title="Touch Panel"><i class="ph ph-hand-pointing"></i></button>
-      <button class="tool-btn" id="tool-geo" title="Sketch Geo-Referencing"><i class="ph ph-globe-hemisphere-west"></i></button>
+      <button class="tool-btn" id="tool-touch" title="Touch Panel"><i class="ph ph-hand-pointing" style="color: #FC8181;"></i></button>
+      <button class="tool-btn" id="tool-geo" title="Sketch Geo-Referencing"><i class="ph ph-globe-hemisphere-west" style="color: #63B3ED;"></i></button>
       <button class="tool-btn" id="tool-pages" title="Pages navigator" aria-label="Pages navigator" aria-pressed="false"><i class="ph ph-files"></i></button>
     </aside>
 
@@ -3459,7 +3167,7 @@ body.light-theme .command-palette-backdrop { background: rgba(40,50,60,.25); }
     
     <div class="status-right">
       <button class="status-btn north-indicator" id="btn-north" title="North direction (click to set)" aria-label="North direction">
-        <i class="ph-fill ph-arrow-up" id="north-arrow"></i>
+        <i class="ph-fill ph-arrow-up" id="north-arrow" style="color:#63B3ED;"></i>
         <span id="north-degrees">0&deg;</span>
       </button>
       <div class="page-indicator">
@@ -20177,7 +19885,7 @@ window.onload = () => {
     var button = document.createElement('button');
     button.className = 'file-menu-item';
     button.id = 'file-import-cad';
-    button.innerHTML = '<i class="ph-fill ph-blueprint"></i> <span>Import CAD...</span>';
+    button.innerHTML = '<i class="ph-fill ph-blueprint" style="color:#B794F4;"></i> <span>Import CAD...</span>';
     button.addEventListener('click', function () { input.click(); });
 
     if (anchor && anchor.parentNode) {
