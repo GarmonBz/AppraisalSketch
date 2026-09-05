@@ -176,10 +176,13 @@ def main():
             })()"""), True))
 
         # --- tab switching through the real click path ---
+        # Look up by data-target, not label text: the area-definition workflow relabels
+        # the Define tab to "Areas" at runtime, and probes must not depend on copy.
         for tab_text, panel in (("Text", "panel-text-library"), ("Symbols", "panel-symbol-library"),
                                 ("Calcs", "panel-calcs"), ("Layers", "panel-layers"), ("Define", "panel-define-area")):
             r = cdp.js(f"""(() => {{
-                const t=[...document.querySelectorAll('.sidebar-tab')].find(t=>t.textContent.trim()==='{tab_text}');
+                const t=document.querySelector('.sidebar-tab[data-sidebar-target="{panel}"]');
+                if (!t) return 'tab not found: {panel}';
                 t.click(); return document.getElementById('{panel}').hidden===false &&
                     document.querySelectorAll('.panel:not([hidden])').length===1;
             }})()""")

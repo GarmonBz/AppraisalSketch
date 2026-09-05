@@ -1,2 +1,2 @@
-baseline
-*.bundle.baseline.html
+node_modules/
+*.log

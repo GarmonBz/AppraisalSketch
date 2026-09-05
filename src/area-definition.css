@@ -1,0 +1,24 @@
+/* Optional, canvas-first area definition. Uses the application's theme tokens. */
+#panel-define-area .area-workflow{display:flex;flex-direction:column;gap:12px;margin-bottom:14px}
+.area-workflow-heading{display:flex;justify-content:space-between;align-items:center;font-size:14px}
+.area-workflow-count,.area-workflow-note{color:var(--text-muted);font-size:11px;line-height:1.5}
+.area-workflow-actions{display:flex;gap:6px;flex-wrap:wrap}
+.area-workflow-actions button{flex:1;min-width:95px}
+.area-workflow button,.area-chooser button{cursor:pointer;border:1px solid var(--border);border-radius:5px;padding:8px;background:var(--bg-app);color:var(--text-main);font:inherit}
+.area-workflow button[aria-pressed=true],.area-chooser .area-primary,.area-chooser button[aria-pressed=true]{background:var(--bg-active);color:#fff}
+.area-workflow-list{display:flex;flex-direction:column;gap:0}
+.area-workflow-list .area-workflow-row{border:0;border-bottom:1px solid var(--border);border-radius:0;background:transparent;padding:12px 2px;text-align:left;display:flex;justify-content:space-between;gap:8px}
+.area-workflow-row span{min-width:0;overflow-wrap:anywhere}.area-workflow-row small{display:block;color:var(--text-muted);font-size:11px;margin-top:3px}.area-workflow-row strong{font-size:12px;white-space:nowrap}
+.area-workflow-total{display:flex;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border);font-size:12px}
+#area-advanced-tools>summary{padding:10px 0;cursor:pointer;color:var(--text-muted);font-size:12px}
+#area-advanced-tools .area-browser-zone{min-height:180px}#area-advanced-tools .area-tree{min-height:140px;max-height:250px;overflow:auto}
+.area-chooser{position:fixed;z-index:900;background:var(--bg-panel);border:1px solid var(--border);border-radius:9px;box-shadow:0 12px 35px #0005;width:300px;padding:16px;color:var(--text-main);font:12px/1.45 var(--font-main);max-height:calc(100dvh - 20px);overflow:auto}
+.area-chooser [hidden]{display:none!important}.area-chooser-head{display:flex;justify-content:space-between;gap:8px;margin-bottom:12px;align-items:center}.area-chooser-head strong{font-size:16px}.area-chooser-head span{color:var(--text-muted);font-size:11px}
+.area-chooser label.area-field{display:block;margin:12px 0}.area-chooser label.area-field>span{display:block;color:var(--text-muted);font-size:11px;margin-bottom:5px}
+.area-chooser input:not([type=checkbox]),.area-chooser select{width:100%;min-width:0;border:1px solid var(--border);border-radius:4px;background:var(--bg-app);color:var(--text-main);padding:8px;font:inherit}
+.area-chooser-types{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}.area-chooser-types button{font-size:12px}
+.area-chooser details{border-top:1px solid var(--border);padding:10px 0}.area-chooser summary{cursor:pointer}.area-chooser-checks{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.area-chooser input[type=checkbox]{accent-color:var(--bg-active);margin-right:5px}
+.area-chooser-repeat{display:block;font-size:11px;color:var(--text-muted);margin:12px 0}.area-chooser-actions{display:flex;gap:8px}.area-chooser-actions .area-primary{flex:1}.area-chooser button:disabled{opacity:.5;cursor:default}
+.area-chooser :is(button,input,select):focus-visible,.area-workflow button:focus-visible{outline:2px solid var(--bg-active);outline-offset:2px}
+.area-workflow-overlay{position:absolute;inset:0;pointer-events:none;z-index:3;width:100%;height:100%}
+@media(max-width:650px){.area-chooser{left:10px!important;right:10px;bottom:10px;top:auto!important;width:auto;max-height:75dvh}}

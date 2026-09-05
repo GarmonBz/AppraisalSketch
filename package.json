@@ -1,0 +1,18 @@
+{
+  "name": "sketch-test",
+  "version": "1.0.0",
+  "description": "A standalone, offline, single-file sketching application for residential appraisal floor plans: exterior/interior walls, curved walls, room shapes, area definitions with GLA/basement rollups, dimensioning, symbol and text libraries, multi-page documents, image underlays, and PNG/SVG/DXF/PDF/XML exports. Runs entirely in the browser from one HTML file — no install, no server, no network access required.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "playwright": "^1.63.0"
+  }
+}
