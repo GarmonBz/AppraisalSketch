@@ -27,8 +27,10 @@ Target: sketch.bundle.html (single generated HTML, ~10.4 MB). Git repo initializ
 | 18 | M3 verify: boot clean w/ rows at load (deferred render), add/switch/ghost/un-ghost/close pass, canvas resize clean, visual crop verified; commit 3890ee3 | DONE 2026-09-05 |
 | 19 | M4: persistent totals chip in status bar (live GLA + area count, refreshed by updateCalcsPanel on every recalc path, click opens Calcs panel) | DONE 2026-09-05 |
 | 20 | M4 verify: end-to-end draw+define test (20x15 rect, GLA1 -> chip "GLA 300.0 sf | 1 area", summary matches), boot clean, status-bar crop verified; commit 6317904. NOTE: valid GLA codes are GLA1..GLA4 (per-floor), bare 'GLA' is not a code | DONE 2026-09-05 |
-| 21 | Phase 5: preference/storage migration tests, file-compat fixtures | PENDING |
-| 22 | Phase 6: full parity suite, performance baseline | PENDING |
+| 21 | Phase 5: compatibility doc (docs/FORMAT_COMPATIBILITY.md) + namespace site comment | DONE 2026-09-05 |
+| 22 | Phase 5 verify: baseline-vs-remodel parity harness — saveModel 0 diffs, XML 0 diffs (ns preserved both sides), validation identical, prefs round-trip pass, legacy load pass; commit 21e3481 | DONE 2026-09-05 |
+| 23 | Phase 6: full parity suite (DXF/PNG/SVG export checks, UI workflows, perf baseline), final identity scan | PENDING |
+| 24 | Phase 7: license, README, release packaging (owner decisions: name, support destination) | PENDING |
 
 ## Notes / decisions
 - Never blind-replace "apex": escapeXml + geometric apex (curveApex etc.) + `urn:xmlns:apex:sketch:xml` (format contract) + `.apx/.skx` accept lists all stay. Justification in docs/INTERFACE_INVENTORY.md §2.
