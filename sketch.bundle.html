@@ -11250,10 +11250,9 @@ class UIManager {
     // --- Docked sidebar shell ---
     document.querySelectorAll('.sidebar-tab').forEach(tab => {
       tab.addEventListener('click', () => {
-        const dock = document.getElementById('sidebar-dock');
-        const isActive = tab.classList.contains('active');
-        if (isActive && dock?.classList.contains('open')) this.setSidebarOpen(false);
-        else this.showPanel(tab.dataset.sidebarTarget);
+        /* Sidebar redesign: clicking any tab activates/retains its view.
+           Collapse is the dedicated chevron (#sidebar-collapse) only. */
+        if (!tab.classList.contains('active')) this.showPanel(tab.dataset.sidebarTarget);
       });
     });
     document.querySelectorAll('.sidebar-pin').forEach(pin => {
@@ -21463,19 +21462,6 @@ window.onload = () => {
     if (e) e.addEventListener('click', () => window.app?.ui?.setSidebarOpen(true));
   }
 
-  /* Tab click contract: clicking the ACTIVE tab collapses (pre-existing
-     behavior), clicking any other tab activates that panel. */
-  function bindTabs() {
-    document.querySelectorAll('.sidebar-tab').forEach(tab => {
-      if (tab.dataset.srBound) return;
-      tab.dataset.srBound = '1';
-      tab.addEventListener('click', () => {
-        const isActive = tab.classList.contains('active');
-        if (isActive && dock()?.classList.contains('open')) window.app?.ui?.setSidebarOpen(false);
-        else window.app?.ui?.showPanel(tab.dataset.sidebarTarget);
-      });
-    });
-  }
 
   /* Pending-classification readout, kept in sync with the tree selection. */
   function readSelection() {
@@ -21580,7 +21566,6 @@ window.onload = () => {
   function boot() {
     setTimeout(() => {
       bindCollapse();
-      bindTabs();
       observe();
       hookRender();
       refreshZones();
@@ -21591,8 +21576,7 @@ window.onload = () => {
         const origRestore = app.ui?.restoreSidebarState?.bind(app.ui);
         if (origRestore) app.ui.restoreSidebarState = function (...args) {
           const r = origRestore(...args);
-          bindTabs();
-          observe();
+              observe();
           refreshZones();
           return r;
         };
