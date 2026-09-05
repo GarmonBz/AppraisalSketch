@@ -52,6 +52,10 @@ Verified headless CDP: at 500 CSS px (DPI-scaled case) display stays 15px single
 Owner request: remove the two puzzle-piece "Activate Module"/"Deactivate Module" ribbon buttons from tab-help. Removed the two `data-command` buttons plus their now-empty ribbon-group and the orphaned ribbon-divider before it (Help tab now = single Keyboard Shortcuts group). Command registry entries (`activate-module`/`deactivate-module` → setPhotometricsModule) deliberately KEPT — `ui.executeCommand` routing still works (verified), only the UI entry points are gone.
 Verified headless CDP: boot clean, 0 module buttons in DOM, shortcuts button intact, both commands still routable via executeCommand, help tab activates; visual = Help ribbon shows only Keyboard Shortcuts, no stray groups/dividers; skill verifier ALL PASS.
 
+## POST-RELEASE: drawing pointer revised (2nd revision of Pointer.png)
+Owner replaced `D:\AIProjects\Sketch Test\Pointer.png` (729×729, bolder strokes w/ flat caps) and asked for re-swap. Same pipeline as first swap: white→transparent master (alpha = inverted luminance ×1.06), LANCZOS 128/64/32, full `data:` URLs, byte-safe splice of `__CURSOR_DATA__` statement. All 7 sprites replaced; hotspot center unchanged.
+Verified headless CDP: boot clean, all 7 keys resolve, live sprites pixel-identical to references, cursor resolves 128/64/32 × dark/light with correct hotspots, on-canvas images load; 32px-on-dark visual = crisp continuous 2px strokes, centered; skill verifier ALL PASS.
+
 ## Notes / decisions
 - Never blind-replace "apex": escapeXml + geometric apex (curveApex etc.) + `urn:xmlns:apex:sketch:xml` (format contract) + `.apx/.skx` accept lists all stay. Justification in docs/INTERFACE_INVENTORY.md §2.
 - Keep every id / data-command / data-target / data-sidebar-* intact; JS couplings listed in inventory §4.
