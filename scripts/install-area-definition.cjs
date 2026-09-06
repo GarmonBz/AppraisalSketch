@@ -13,6 +13,14 @@ if(!source.includes('defineAreaTarget(target, code, name, autoPost')){
 if(!source.includes('edit-area-definition')){
  replaceOnce("    items.push(\n      { action:'make-negative'", "    const areaUnderCursor = this.app.areaWorkflow?.polyAt?.(clientX, clientY);\n    if (areaUnderCursor) items.push(\n      { action:'edit-area-definition',label:'Edit Definition...',icon:'ph-tag',run:() => this.app.areaWorkflow.open(areaUnderCursor, { x:clientX, y:clientY }) },\n      { separator:true }\n    );\n    items.push(\n      { action:'make-negative'");
 }
+// The Code library section is retired, so #area-name-input no longer exists and
+// the tree is no longer where a type is chosen. Guard the two unguarded writes
+// and repoint Redefine's refusal message at the palette.
+if(!source.includes("if (el) el.value = String(data.get('name'))")){
+ replaceOnce("      document.getElementById('area-name-input').value = String(data.get('name'));", "      { const el = document.getElementById('area-name-input'); if (el) el.value = String(data.get('name')); }");
+ replaceOnce("      document.getElementById('area-name-input').value = name;", "      { const el = document.getElementById('area-name-input'); if (el) el.value = name; }");
+ replaceOnce("          await this.alertDialog('Select a new area type from the tree first.');", "          await this.alertDialog('Click a type in the Areas palette first, then Redefine.');");
+}
 const start='<!-- AREA DEFINITION WORKFLOW: generated from src/area-definition.* -->';
 const end='<!-- /AREA DEFINITION WORKFLOW -->';
 if(source.includes(start)){const a=source.indexOf(start),b=source.indexOf(end,a);if(b<0)throw Error('Missing module end');source=source.slice(0,a)+source.slice(b+end.length);}

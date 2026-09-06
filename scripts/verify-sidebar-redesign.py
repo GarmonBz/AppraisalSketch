@@ -151,27 +151,31 @@ def main():
         results.append(check("all 5 tabs fully visible in strip", clip, True))
 
         # --- three-zone structure ---
-        results.append(check("edit sections 3",
-            cdp.js("document.querySelectorAll('#panel-define-area .area-edit-group').length"), 3))
-        results.append(check("edit sections read operations->labels->library",
+        results.append(check("edit sections 2",
+            cdp.js("document.querySelectorAll('#panel-define-area .area-edit-group').length"), 2))
+        results.append(check("edit sections read operations->labels",
             cdp.js("""(() => {
                 const z=[...document.querySelectorAll('#panel-define-area .area-edit-title')].map(e=>e.textContent);
-                return z.join('|')==='Area operations|Label defaults|Code library';
+                return z.join('|')==='Area operations|Label defaults';
             })()"""), True))
-        results.append(check("pending readout present",
-            cdp.js("document.getElementById('area-pending-code').textContent"), "No classification selected"))
+        results.append(check("the state key Define First reads still exists",
+            cdp.js("'selectedAreaType' in window.app.state"), True))
         results.append(check("selection-summary zone retired (the canvas shows the selection)",
             cdp.js("!document.getElementById('area-selection-body')"), True))
-        results.append(check("search + tree + new-code inside the Code library section",
+        results.append(check("code tree, its search, pending readout and Apply are retired",
             cdp.js("""(() => {
-                const z=[...document.querySelectorAll('.area-edit-group')].find(e=>e.querySelector('.area-tree'));
-                return !!z && !!z.querySelector('#area-code-search') && !!z.querySelector('.area-tree') && !!z.querySelector('#btn-add-area-code');
+                return !document.querySelector('.area-tree') && !document.getElementById('area-code-search')
+                  && !document.getElementById('area-pending-code') && !document.getElementById('btn-apply-area')
+                  && !document.getElementById('area-name-input');
             })()"""), True))
-        results.append(check("apply sits with the code-library controls",
+        results.append(check("arming a swatch owns selectedAreaType, the state the tree used to set",
             cdp.js("""(() => {
-                const z=[...document.querySelectorAll('.area-edit-group')].find(e=>e.querySelector('.area-tree'));
-                return !!z && !!z.querySelector('#btn-apply-area') && !!z.querySelector('#btn-add-area-code') && !!z.querySelector('#btn-edit-area');
-            })()"""), True))
+                const tile=document.querySelector('.area-tile[data-code="GLA1"]');
+                tile.click();
+                const armed=window.app.state.selectedAreaType;
+                tile.click();
+                return [armed, window.app.state.selectedAreaType];
+            })()"""), ["GLA1", None]))
 
         # --- tab switching through the real click path ---
         # Look up by data-target, not label text: the area-definition workflow relabels
@@ -219,54 +223,51 @@ def main():
         }))()""", await_promise=True)
         results.append(check("expand: dock reopens with tabs", r and r.get("openClass") == True and r.get("tabsDisplay") != "none"))
 
-        # --- classification browser: search + select + pending + apply flow ---
+        # --- palette flow: arm a swatch, then assign it to a real polygon ---
+        # Everything is wrapped so a missing element reports a failure instead of
+        # leaving the promise unsettled, which used to hang the CDP socket.
         flow = cdp.js("""(() => new Promise(async (res) => {
-            const out = {};
+          const out = {};
+          try {
             const app = window.app;
             const ui = app.ui;
             ui.showPanel('panel-define-area');
-            await new Promise(r=>setTimeout(r,50));
-            // search across categories
-            const search = document.getElementById('area-code-search');
-            search.value = 'living';
-            search.dispatchEvent(new Event('input', {bubbles:true}));
-            await new Promise(r=>setTimeout(r,50));
-            out.searchHits = document.querySelectorAll('.area-tree .area-btn').length;
-            out.groupsVisible = document.querySelectorAll('.area-tree .tree-node').length;
-            // select a code
-            const btn = document.querySelector('.area-tree .area-btn');
-            btn.click();
-            await new Promise(r=>setTimeout(r,50));
-            out.pendingText = document.getElementById('area-pending-code').textContent;
-            out.selectedType = app.state.selectedAreaType;
-            // create a real polygon via the app's own room-shape pipeline
+            await new Promise(r=>setTimeout(r,80));
+            out.tiles = document.querySelectorAll('.area-tile').length;
+            out.groups = document.querySelectorAll('.area-tile-group').length;
+            const tile = document.querySelector('.area-tile[data-code="GLA1"]');
+            if (!tile) { out.error = 'no GLA1 tile'; return res(out); }
+            tile.click();
+            await new Promise(r=>setTimeout(r,80));
+            out.armedType = app.state.selectedAreaType;
+            out.armedTiles = document.querySelectorAll('.area-tile[aria-selected=true]').length;
+            // a real polygon through the app's own room-shape pipeline
             app.state.pendingShape = { kind: 'rectangle', width: 20, depth: 15,
                 cutWidth: 0, cutDepth: 0, rotation: 0, defineAsArea: true };
             app.placeShapeAt({ x: 0, y: 0 });
-            await new Promise(r=>setTimeout(r,100));
+            await new Promise(r=>setTimeout(r,120));
             out.polyCount = app.state.polygons.length;
-            // select the new polygon
             const poly = app.state.polygons[app.state.polygons.length-1];
-            app.state.selectedPolyIds = new Set([poly.id]);
-            ui.updateAreaActionStates();
-            const applyBtn = document.getElementById('btn-apply-area');
-            out.applyEnabledBefore = !applyBtn.disabled;
-            applyBtn.click();
+            // assign the armed type through the workflow's own click path
+            app.areaWorkflow.click({ x: 1, y: 1 });
             await new Promise(r=>setTimeout(r,150));
             out.appliedType = poly.type;
-            out.pendingAfterApply = document.getElementById('area-pending-code').textContent;
+            out.appliedName = poly.name;
+            document.querySelector('.area-tile[data-code="GLA1"]').click();
             res(out);
+          } catch (e) { out.error = String(e && e.message || e); res(out); }
         }))()""", await_promise=True)
         print("flow:", json.dumps(flow)[:400])
-        results.append(check("search filtered tree", isinstance(flow, dict) and flow.get("searchHits", 0) > 0))
-        results.append(check("pending shows after code click",
-            isinstance(flow, dict) and "Pending:" in str(flow.get("pendingText", ""))))
-        results.append(check("apply flow completes on polygon",
-            isinstance(flow, dict) and flow.get("appliedType") not in (None, "UND")))
+        results.append(check("palette renders every code under group headings",
+            isinstance(flow, dict) and flow.get("tiles", 0) > 20 and flow.get("groups", 0) >= 8))
+        results.append(check("clicking a swatch arms it and sets selectedAreaType",
+            isinstance(flow, dict) and flow.get("armedType") == "GLA1" and flow.get("armedTiles") == 1))
+        results.append(check("an armed swatch classifies a real polygon",
+            isinstance(flow, dict) and flow.get("appliedType") == "GLA1"))
 
         # empty-state honesty after apply (selection cleared)
-        results.append(check("pending readout resets after apply",
-            cdp.js("document.getElementById('area-pending-code').textContent"), "No classification selected"))
+        results.append(check("un-picking a swatch leaves nothing armed and clears the standing type",
+            cdp.js("[document.querySelectorAll('.area-tile[aria-selected=true]').length, window.app.state.selectedAreaType]"), [0, None]))
 
         # --- labels + area tools disclosures intact ---
         results.append(check("label defaults keep 6 checkboxes + suffix + dims placement",

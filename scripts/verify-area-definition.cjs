@@ -59,7 +59,7 @@ const {pathToFileURL}=require('node:url');
    document.querySelector('.area-advanced-close').click();
    return {before,opened,sections,zones,closed:el.hidden};
  });
- assert.deepEqual(sheet,{before:true,opened:true,sections:'Area operations|Label defaults|Code library',zones:3,closed:true},'Edit sheet did not open/close correctly');
+ assert.deepEqual(sheet,{before:true,opened:true,sections:'Area operations|Label defaults',zones:2,closed:true},'Edit sheet did not open/close correctly');
  // The pin preference has exactly one reachable control and it round-trips.
  const pin=await page.evaluate(()=>{
    const btn=document.getElementById('sidebar-pin-toggle');
@@ -351,5 +351,64 @@ const {pathToFileURL}=require('node:url');
  await page.waitForFunction(() => !document.querySelector('.area-tile[data-code="BSMT"]'), null, { timeout: 5000 });
  assert.ok(await page.evaluate(() => !!document.querySelector('.area-tile[data-code="BSMT2"]')), 'deleting one code must not take its group-mates with it');
  await page.evaluate(() => { try { localStorage.removeItem('sketch.areaCodes'); } catch (_) {} });
- assert.deepEqual(errors,[]);console.log('PASS: unrestricted drawing, cancel purity, real canvas targeting, definitions/totals, undo/redo, repeat, custom codes, area list editing, Escape, view-only find, responsive chooser, import dismissal, bounded palette, definition-only Areas tab, library sheet, pin toggle the area-type palette (drag, arm, clear, reclassify), the New-area flow, and right-click editing from the Calcs list, the palette and the canvas, and the type context menu (assign, select, edit, delete).');
+
+ // ---- the Code library is retired; the palette owns the type state ----
+ assert.deepEqual(await page.evaluate(() => ['area-code-search','area-pending-code','area-name-input','btn-apply-area']
+   .filter(id => document.getElementById(id))), [], 'the code-library controls should be gone from the DOM');
+ assert.equal(await page.locator('.area-tree').count(), 0, 'the code tree is retired');
+
+ // arming sets the state the tree used to own, and un-picking clears it
+ await page.evaluate(() => app.ui.showPanel('panel-define-area'));
+ await page.waitForTimeout(200);
+ await page.locator('.area-tile[data-code="GLA3"]').click();
+ await page.waitForTimeout(150);
+ assert.equal(await page.evaluate(() => app.state.selectedAreaType), 'GLA3', 'arming should set selectedAreaType');
+ assert.equal(await page.evaluate(() => app.state.selectedAreaName), 'Third Floor', 'arming should set selectedAreaName');
+
+ // Define First reads it WHILE DRAWING, so picking the pen must not clear it
+ const born = await page.evaluate(() => {
+   app.applyOptions({ ...app.state.options, defineFirst: true });
+   app.setMode('draw-exterior');
+   const standing = app.state.selectedAreaType;
+   for (const pt of [{x:200,y:200},{x:212,y:200},{x:212,y:209},{x:200,y:209},{x:200,y:200}]) app.handleCanvasClick(pt);
+   const poly = app.state.polygons[app.state.polygons.length - 1];
+   app.applyOptions({ ...app.state.options, defineFirst: false });
+   return { standing, type: poly && poly.type, name: poly && poly.name };
+ });
+ assert.equal(born.standing, 'GLA3', 'switching to a drawing tool must not clear the standing type - Define First needs it');
+ assert.equal(born.type, 'GLA3', 'Define First should draw the polygon pre-classified from the armed swatch');
+ assert.equal(born.name, 'Third Floor');
+
+ // Redefine now reads the armed type instead of a tree selection
+ await page.locator('.area-tile[data-code="GAR2"]').click();
+ await page.waitForTimeout(150);
+ const target = await page.evaluate(() => {
+   const poly = app.state.polygons[app.state.polygons.length - 1];
+   app.state.selectedPolyIds = new Set([poly.id]);
+   app.ui.updateAreaActionStates();
+   return poly.id;
+ });
+ await page.locator('#area-open-library').click();
+ await page.waitForTimeout(200);
+ await page.locator('#btn-redefine-area').click();
+ await page.waitForTimeout(300);
+ assert.equal(await page.evaluate(id => app.state.polygons.find(p => p.id === id).type, target), 'GAR2',
+   'Redefine should use the type armed in the palette');
+ await page.locator('.area-advanced-close').click();
+ await page.waitForTimeout(200);
+
+ // Edit type and New type still work with #area-name-input gone (it was written unguarded)
+ await page.evaluate(() => app.ui.showAreaDefinitionEditor('GLA3'));
+ await page.waitForSelector('.area-definition-dialog');
+ await page.fill('.area-definition-dialog [name=name]', 'Attic');
+ await page.locator('.area-definition-dialog [type=submit]').click();
+ await page.waitForTimeout(300);
+ assert.equal(await page.evaluate(() => app.areaCodes.find(c => c.code === 'GLA3').name), 'Attic',
+   'editing a code must survive the removal of #area-name-input');
+ await page.evaluate(() => app.ui.showAddAreaCode());
+ await page.waitForTimeout(250);
+ assert.ok(await page.evaluate(() => !!document.querySelector('.sidebar-manager-dialog')), 'New type should still open');
+ await page.evaluate(() => document.querySelector('.sidebar-manager-overlay')?.remove());
+ await page.evaluate(() => { try { localStorage.removeItem('sketch.areaCodes'); } catch (_) {} });
+ assert.deepEqual(errors,[]);console.log('PASS: unrestricted drawing, cancel purity, real canvas targeting, definitions/totals, undo/redo, repeat, custom codes, area list editing, Escape, view-only find, responsive chooser, import dismissal, bounded palette, definition-only Areas tab, library sheet, pin toggle the area-type palette (drag, arm, clear, reclassify), the New-area flow, and right-click editing from the Calcs list, the palette and the canvas, the type context menu (assign, select, edit, delete), and the retired code library (palette owns selectedAreaType; Define First and Redefine still work).');
  }finally{await browser.close();}})().catch(e=>{console.error(e);process.exit(1)});

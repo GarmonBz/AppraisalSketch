@@ -79,7 +79,7 @@
           (hint ? '<p class="area-edit-hint">' + hint + '</p>' : '');
         return el;
       };
-      const ops = section('Area operations', 'Acts on the areas selected on the canvas.');
+      const ops = section('Area operations', 'Acts on the areas selected on the canvas. Redefine uses the type armed in the palette.');
       const opRow = document.createElement('div');
       opRow.className = 'area-edit-actions';
       for (const id of ['btn-redefine-area', 'btn-clone-area', 'btn-reopen-area', 'btn-detect-regions']) {
@@ -95,20 +95,9 @@
         labels.append(post);
       }
 
-      const library = section('Code library');
-      for (const selector of ['#area-code-search', '.area-tree', '#area-pending-code', '#area-name-input']) {
-        const el = grab(selector);
-        if (el) library.append(el);
-      }
-      const libRow = document.createElement('div');
-      libRow.className = 'area-edit-actions';
-      for (const id of ['btn-add-area-code', 'btn-edit-area', 'btn-apply-area']) {
-        const btn = grab('#' + id);
-        if (btn) libRow.append(btn);
-      }
-      library.append(libRow);
-
-      host.replaceChildren(ops, labels, library);
+      // The code library is retired: the palette browses types, and its
+      // right-click menu covers New, Edit, Delete and assigning to a selection.
+      host.replaceChildren(ops, labels);
     }
 
     function editable(poly) { return app.isEntityVisible(poly) && !app.isEntityLocked(poly); }
@@ -136,6 +125,12 @@
     function setArmed(code) {
       const next = armedCode === code ? null : code;
       armedCode = next;
+      // This is the state the code tree used to own. Define First reads it when
+      // a new polygon is drawn, and Redefine reads it for the selection.
+      const entry = next ? app.areaCodes.find(c => c.code === next) : null;
+      app.state.selectedAreaType = next;
+      app.state.selectedAreaName = entry ? (entry.name || next) : null;
+      app.ui.updateAreaActionStates?.();
       if (next) activate();
       notify(next ? 'Click an outline to assign ' + (app.areaCodes.find(c => c.code === next)?.name || next) + '. Escape stops.' : '');
       paletteSignature = '';
@@ -227,6 +222,10 @@
         ? 'Drag onto an area to clear its classification. Right-click for options.'
         : 'Drag onto an outline, or click to arm. Right-click for options.';
       tile.addEventListener('pointerdown', startTileDrag);
+      tile.addEventListener('click', () => {
+        if (tile.dataset.pointerHandled) { delete tile.dataset.pointerHandled; return; }
+        setArmed(entry.code);
+      });
       /* Right-click a type to edit the code itself - name, colours, factor -
          without drilling into the edit sheet. */
       tile.addEventListener('contextmenu', event => {
@@ -326,7 +325,7 @@
         if (dragGhost) { dragGhost.remove(); dragGhost = null; }
         const wasDragging = moved;
         dragCode = null; hoverPoly = null;
-        if (!wasDragging) { setArmed(code); return; }
+        if (!wasDragging) { tile.dataset.pointerHandled = '1'; setArmed(code); return; }
         const target = polyAtClient(upEvent.clientX, upEvent.clientY);
         if (target && assignTo(target, code)) {
           notify(code === 'UND' ? 'Classification cleared.' : 'Area defined. Drag another type, or click one to keep assigning.');
