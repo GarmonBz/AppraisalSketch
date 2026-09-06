@@ -52,9 +52,12 @@ For suite integration, embed it in an iframe — the host communicates through
 
 Copyright (c) 2026 Gerald Shugars, Jr. (NW Evaluations).
 
-Released under the **PolyForm Noncommercial License 1.0.0** — personal,
-research, educational, charitable, and government use are permitted;
-**commercial use is not permitted**. See `LICENSE` for the full text.
+Released under the **PolyForm Small Business License 1.0.0** — personal,
+research, educational, charitable, and government use are permitted, as is
+business use by companies with **fewer than 100 employees and contractors and
+under 1,000,000 USD (2019, inflation-adjusted) revenue in the prior tax year**.
+Larger companies need a separate commercial licence. See `LICENSE` for the
+full text.
 
 Third-party components (Phosphor Icons) are MIT-licensed; see `NOTICE.md`.
 

@@ -1,18 +1,3 @@
-Appraisal Sketch 1.0
-Copyright (c) 2026 Gerald Shugars, Jr. (NW Evaluations)
-
-This software is licensed under the PolyForm Small Business License 1.0.0.
-Use for the benefit of a company is permitted only if that company has fewer
-than 100 total employees and independent contractors and less than
-1,000,000 USD (2019, inflation-adjusted) total revenue in the prior tax year.
-Personal, research, educational, charitable and government use are permitted.
-Larger companies need a separate commercial licence. See the license text
-below and https://polyformproject.org/licenses/small-business/1.0.0
-
-Third-party components are covered by their own licenses; see NOTICE.md.
-
-================================================================================
-
 PolyForm Small Business License 1.0.0
 
 https://polyformproject.org/licenses/small-business/1.0.0

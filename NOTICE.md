@@ -40,7 +40,7 @@ project (2026-09 interface remodel) and carry no third-party claims.
 ## Project identity
 
 Appraisal Sketch 1.0 — Copyright (c) 2026 Gerald Shugars, Jr. (NW Evaluations).
-Licensed under the PolyForm Noncommercial License 1.0.0 (see LICENSE).
+Licensed under the PolyForm Small Business License 1.0.0 (see LICENSE).
 Support: thatappraiserx@gmail.com
 
 ## Notes

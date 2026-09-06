@@ -1,7 +1,7 @@
 # Contributing to Appraisal Sketch
 
 Thank you for considering contributing. This project is licensed under the
-PolyForm Noncommercial License 1.0.0 — by contributing, you agree your
+PolyForm Small Business License 1.0.0 — by contributing, you agree your
 contributions are licensed under the same terms.
 
 ## How the codebase is organized

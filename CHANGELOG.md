@@ -39,5 +39,7 @@ First independent release of Appraisal Sketch.
   full render improved ~45% (3.1 ms → 1.7 ms).
 
 ### License
-- PolyForm Noncommercial License 1.0.0. Commercial use is not permitted.
+- PolyForm Small Business License 1.0.0. Business use is permitted for companies
+  under 100 people and under 1,000,000 USD prior-year revenue; larger companies
+  need a separate commercial licence.
   Third-party notices in `NOTICE.md` (Phosphor Icons, MIT).
