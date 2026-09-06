@@ -1,17 +1,75 @@
 /* Optional, canvas-first area definition. Uses the application's theme tokens. */
-#panel-define-area .area-workflow{display:flex;flex-direction:column;gap:12px;margin-bottom:14px}
-.area-workflow-heading{display:flex;justify-content:space-between;align-items:center;font-size:14px}
+#panel-define-area{position:relative}
+#panel-define-area>.panel-body{overflow:hidden}
+#panel-define-area .area-workflow{display:flex;flex-direction:column;gap:12px;margin-bottom:0;flex:1;min-height:0}
+.area-workflow-heading{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px}
+.area-workflow-heading strong{font-weight:600}
 .area-workflow-count,.area-workflow-note{color:var(--text-muted);font-size:11px;line-height:1.5}
+.area-calcs-hint{flex:none;color:var(--text-muted);font-size:11px;line-height:1.4;padding:2px 0}
+.area-workflow-note:empty{display:none}
 .area-workflow-actions{display:flex;gap:6px;flex-wrap:wrap}
 .area-workflow-actions button{flex:1;min-width:95px}
 .area-workflow button,.area-chooser button{cursor:pointer;border:1px solid var(--border);border-radius:5px;padding:8px;background:var(--bg-app);color:var(--text-main);font:inherit}
 .area-workflow button[aria-pressed=true],.area-chooser .area-primary,.area-chooser button[aria-pressed=true]{background:var(--bg-active);color:#fff}
-.area-workflow-list{display:flex;flex-direction:column;gap:0}
-.area-workflow-list .area-workflow-row{border:0;border-bottom:1px solid var(--border);border-radius:0;background:transparent;padding:12px 2px;text-align:left;display:flex;justify-content:space-between;gap:8px}
-.area-workflow-row span{min-width:0;overflow-wrap:anywhere}.area-workflow-row small{display:block;color:var(--text-muted);font-size:11px;margin-top:3px}.area-workflow-row strong{font-size:12px;white-space:nowrap}
+/* The list owns the panel's spare height and scrolls inside itself, so the
+   Find-undefined action and the living-area total never leave the viewport. */
+.area-workflow-list{display:flex;flex-direction:column;gap:0;flex:0 1 auto;min-height:0;max-height:160px;overflow-y:auto}
+.area-workflow-foot{display:flex;flex-direction:column;gap:12px;flex:none;border-top:1px solid var(--border);padding-top:8px}
+.area-workflow-list .area-workflow-row{border:0;border-bottom:1px solid var(--border);border-radius:0;background:transparent;padding:6px 2px;min-height:38px;text-align:left;display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px}
+.area-workflow-row .area-row-bar{flex:0 0 4px;height:20px;border-radius:1px}
+.area-workflow-row .area-row-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px}
+.area-workflow-row .area-row-code{flex:none;font-size:10px;letter-spacing:.04em;color:var(--text-muted);border:1px solid var(--border);border-radius:2px;padding:1px 5px}
+.area-workflow-row small{flex-basis:100%;color:var(--text-muted);font-size:11px}
+.area-workflow-row strong{flex:none;font-size:12px;white-space:nowrap;font-variant-numeric:tabular-nums}
 .area-workflow-total{display:flex;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border);font-size:12px}
-#area-advanced-tools>summary{padding:10px 0;cursor:pointer;color:var(--text-muted);font-size:12px}
-#area-advanced-tools .area-browser-zone{min-height:180px}#area-advanced-tools .area-tree{min-height:140px;max-height:250px;overflow:auto}
+/* Area-type palette: classification as a colour swatch you drag onto an outline,
+   instead of a code tree you expand. Swatches use each code's own canvas colour. */
+.area-palette{flex:1 1 auto;min-height:0;overflow-y:auto;display:flex;flex-direction:column;border:1px solid var(--border);background:var(--bg-app)}
+.area-workflow .area-tile{display:flex;align-items:center;gap:8px;min-height:30px;padding:2px 6px 2px 0;border:0;border-bottom:1px solid var(--border);background:transparent;color:var(--text-main);font:inherit;font-size:12px;text-align:left;cursor:grab;touch-action:none;width:100%}
+.area-workflow .area-tile:last-child{border-bottom:0}
+.area-workflow .area-tile .area-tile-swatch{flex:0 0 5px;align-self:stretch;min-height:30px}
+.area-workflow .area-tile .area-tile-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.area-workflow .area-tile .area-tile-code{flex:none;font-size:9.5px;letter-spacing:.04em;color:var(--text-muted)}
+.area-workflow .area-tile .area-tile-used{flex:none;font-size:9.5px;color:#fff;background:var(--bg-active);border-radius:8px;padding:0 5px;min-width:16px;text-align:center}
+.area-workflow .area-tile:hover{background:var(--bg-hover)}
+.area-workflow .area-tile[aria-selected=true]{background:var(--bg-hover);box-shadow:inset 0 0 0 1px var(--bg-active)}
+.area-workflow .area-tile:focus-visible{outline:2px solid var(--bg-active);outline-offset:-2px}
+.area-workflow .area-tile-group{position:sticky;top:0;z-index:1;display:flex;align-items:center;gap:6px;width:100%;background:var(--bg-ribbon);color:var(--text-muted);font:inherit;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 8px;border:0;border-bottom:1px solid var(--border);border-radius:0;cursor:pointer;text-align:left}
+.area-workflow .area-tile-group:hover{color:var(--text-main);background:var(--bg-hover)}
+.area-workflow .area-tile-group:focus-visible{outline:2px solid var(--bg-active);outline-offset:-2px}
+.area-workflow .area-tile-group i{font-size:10px;letter-spacing:0}
+.area-workflow .area-tile-group .area-group-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.area-workflow .area-tile-group .area-group-count{flex:none;letter-spacing:0;font-size:10px;opacity:.75}
+.area-palette-empty{color:var(--text-muted);padding:10px 8px;font-size:11px}
+.area-workflow-row.area-drop-target{outline:2px solid var(--bg-active);outline-offset:-2px}
+.area-drag-ghost{position:fixed;z-index:950;pointer-events:none;display:flex;align-items:center;gap:7px;background:var(--bg-panel);border:1px solid var(--bg-active);border-radius:3px;padding:4px 9px 4px 0;font-size:12px;color:var(--text-main);box-shadow:0 8px 22px #0007;transform:translate(10px,10px)}
+.area-drag-ghost i{width:5px;height:22px;display:block;flex:none}
+.area-drag-ghost small{color:var(--text-muted);font-size:9.5px}
+body.area-dragging{cursor:grabbing}
+.area-workflow-links{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-muted)}
+.area-workflow-links button{border:0;background:none;padding:0;color:var(--text-muted);font:inherit;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.area-workflow-links button:hover{color:var(--text-main)}
+.area-workflow-links button[aria-pressed=true]{color:var(--bg-active)}
+body.light-theme .area-workflow-links button[aria-pressed=true]{color:#1677bd}
+/* Code library and area tools: a sheet over the Areas panel rather than a
+   second definition surface inline beneath the list. The controls keep their
+   ids, handlers and DOM ancestry; only their position in the flow changes. */
+#area-advanced-tools{position:absolute;inset:0;z-index:6;background:var(--bg-panel);display:flex;flex-direction:column}
+#area-advanced-tools[hidden]{display:none!important}
+.area-advanced-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 8px;border-bottom:1px solid var(--border);background:var(--bg-ribbon);flex:none}
+.area-advanced-head strong{font-size:12px}
+.area-advanced-close{border:0;background:none;color:var(--text-muted);font-size:18px;line-height:1;padding:0 4px;cursor:pointer}
+.area-advanced-close:hover{color:var(--text-main)}
+.area-advanced-body{flex:1;min-height:0;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:6px}
+#area-advanced-tools .area-tree{min-height:120px;max-height:220px;overflow:auto;border:1px solid var(--border);background:var(--bg-app)}
+.area-edit-group{display:flex;flex-direction:column;gap:6px}
+.area-edit-group+.area-edit-group{border-top:1px solid var(--border);padding-top:10px}
+.area-edit-title{margin:0;font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text-muted)}
+.area-edit-hint{margin:-2px 0 2px;font-size:11px;color:var(--text-muted);line-height:1.4}
+.area-edit-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.area-edit-actions .action-btn{width:100%;padding:6px 4px}
+#area-advanced-tools .auto-post{border:0;padding:0}
+#area-advanced-tools .area-name-input,#area-advanced-tools .lib-search-input{width:100%;margin-bottom:0}
 .area-chooser{position:fixed;z-index:900;background:var(--bg-panel);border:1px solid var(--border);border-radius:9px;box-shadow:0 12px 35px #0005;width:300px;padding:16px;color:var(--text-main);font:12px/1.45 var(--font-main);max-height:calc(100dvh - 20px);overflow:auto}
 .area-chooser [hidden]{display:none!important}.area-chooser-head{display:flex;justify-content:space-between;gap:8px;margin-bottom:12px;align-items:center}.area-chooser-head strong{font-size:16px}.area-chooser-head span{color:var(--text-muted);font-size:11px}
 .area-chooser label.area-field{display:block;margin:12px 0}.area-chooser label.area-field>span{display:block;color:var(--text-muted);font-size:11px;margin-bottom:5px}
@@ -19,6 +77,6 @@
 .area-chooser-types{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}.area-chooser-types button{font-size:12px}
 .area-chooser details{border-top:1px solid var(--border);padding:10px 0}.area-chooser summary{cursor:pointer}.area-chooser-checks{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.area-chooser input[type=checkbox]{accent-color:var(--bg-active);margin-right:5px}
 .area-chooser-repeat{display:block;font-size:11px;color:var(--text-muted);margin:12px 0}.area-chooser-actions{display:flex;gap:8px}.area-chooser-actions .area-primary{flex:1}.area-chooser button:disabled{opacity:.5;cursor:default}
-.area-chooser :is(button,input,select):focus-visible,.area-workflow button:focus-visible{outline:2px solid var(--bg-active);outline-offset:2px}
+.area-chooser :is(button,input,select):focus-visible,.area-workflow button:focus-visible,.area-advanced-close:focus-visible{outline:2px solid var(--bg-active);outline-offset:2px}
 .area-workflow-overlay{position:absolute;inset:0;pointer-events:none;z-index:3;width:100%;height:100%}
 @media(max-width:650px){.area-chooser{left:10px!important;right:10px;bottom:10px;top:auto!important;width:auto;max-height:75dvh}}

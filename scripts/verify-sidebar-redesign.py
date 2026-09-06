@@ -151,28 +151,26 @@ def main():
         results.append(check("all 5 tabs fully visible in strip", clip, True))
 
         # --- three-zone structure ---
-        results.append(check("area zones 3",
-            cdp.js("document.querySelectorAll('#panel-define-area .area-zone').length"), 3))
-        results.append(check("zone order summary->browser->setup",
+        results.append(check("edit sections 3",
+            cdp.js("document.querySelectorAll('#panel-define-area .area-edit-group').length"), 3))
+        results.append(check("edit sections read operations->labels->library",
             cdp.js("""(() => {
-                const z=[...document.querySelectorAll('#panel-define-area .area-zone')].map(e=>e.className);
-                return z[0].includes('summary') && z[1].includes('browser') && z[2].includes('setup');
+                const z=[...document.querySelectorAll('#panel-define-area .area-edit-title')].map(e=>e.textContent);
+                return z.join('|')==='Area operations|Label defaults|Code library';
             })()"""), True))
         results.append(check("pending readout present",
             cdp.js("document.getElementById('area-pending-code').textContent"), "No classification selected"))
-        results.append(check("selection summary present",
-            cdp.js("!!document.getElementById('area-selection-body')"), True))
-        results.append(check("search + tree + new-code inside browser zone",
+        results.append(check("selection-summary zone retired (the canvas shows the selection)",
+            cdp.js("!document.getElementById('area-selection-body')"), True))
+        results.append(check("search + tree + new-code inside the Code library section",
             cdp.js("""(() => {
-                const z=document.querySelector('.area-browser-zone');
-                return !!z.querySelector('#area-code-search') && !!z.querySelector('.area-tree') && !!z.querySelector('#btn-add-area-code');
+                const z=[...document.querySelectorAll('.area-edit-group')].find(e=>e.querySelector('.area-tree'));
+                return !!z && !!z.querySelector('#area-code-search') && !!z.querySelector('.area-tree') && !!z.querySelector('#btn-add-area-code');
             })()"""), True))
-        results.append(check("apply directly above labels disclosure",
+        results.append(check("apply sits with the code-library controls",
             cdp.js("""(() => {
-                const z=document.querySelector('.area-setup-zone');
-                const apply=z.querySelector('#btn-apply-area');
-                const labels=[...z.querySelectorAll('details.define-more')][0];
-                return apply && labels && labels.querySelector('summary').textContent==='Labels' && apply.getBoundingClientRect().bottom<=labels.getBoundingClientRect().top+2;
+                const z=[...document.querySelectorAll('.area-edit-group')].find(e=>e.querySelector('.area-tree'));
+                return !!z && !!z.querySelector('#btn-apply-area') && !!z.querySelector('#btn-add-area-code') && !!z.querySelector('#btn-edit-area');
             })()"""), True))
 
         # --- tab switching through the real click path ---
@@ -267,20 +265,26 @@ def main():
             isinstance(flow, dict) and flow.get("appliedType") not in (None, "UND")))
 
         # empty-state honesty after apply (selection cleared)
-        results.append(check("selection summary back to empty state",
-            cdp.js("document.getElementById('area-selection-body').textContent.length > 10"), True))
+        results.append(check("pending readout resets after apply",
+            cdp.js("document.getElementById('area-pending-code').textContent"), "No classification selected"))
 
         # --- labels + area tools disclosures intact ---
-        results.append(check("labels disclosure has 6 checkboxes + suffix",
+        results.append(check("label defaults keep 6 checkboxes + suffix + dims placement",
             cdp.js("""(() => {
-                const d=[...document.querySelectorAll('#panel-define-area details.define-more')][0];
-                return d.querySelectorAll('input[type=checkbox]').length===6 && !!d.querySelector('#autopost-suffix');
+                const d=[...document.querySelectorAll('.area-edit-group')][1];
+                return d.querySelectorAll('input[type=checkbox]').length===6 && !!d.querySelector('#autopost-suffix') && !!d.querySelector('#dimension-placement');
             })()"""), True))
-        results.append(check("area tools has 4 buttons",
+        results.append(check("area operations keep their 4 buttons",
             cdp.js("""(() => {
-                const d=[...document.querySelectorAll('#panel-define-area details.define-more')][1];
-                return d.querySelectorAll('button').length===4;
+                const d=[...document.querySelectorAll('.area-edit-group')][0];
+                return ['btn-redefine-area','btn-clone-area','btn-reopen-area','btn-detect-regions']
+                  .every(id => !!d.querySelector('#'+id)) && d.querySelectorAll('button').length===4;
             })()"""), True))
+
+        results.append(check("no disclosures left in the Areas panel",
+            cdp.js("document.querySelectorAll('#panel-define-area details').length"), 0))
+        results.append(check("one edit link, not two",
+            cdp.js("[!!document.getElementById('area-open-library'), !!document.getElementById('area-open-tools')]"), [True, False]))
 
         # --- themes ---
         for theme in ("light-theme", "blue-theme"):

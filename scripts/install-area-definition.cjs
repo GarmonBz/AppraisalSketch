@@ -7,6 +7,12 @@ if(!source.includes('defineAreaTarget(target, code, name, autoPost')){
  replaceOnce("else if (id === 'tool-define-area') {\n          this.showPanel('panel-define-area');", "else if (id === 'tool-define-area') {\n          this.app.areaWorkflow?.activate();\n          this.showPanel('panel-define-area');");
  replaceOnce("    this.pushUndo('Define Area');\n    target.type = code;", "    this.defineAreaTarget(target, code, name);\n  }\n\n  defineAreaTarget(target, code, name, autoPost = null) {\n    if (!this.state.polygons.includes(target)) return;\n    this.pushUndo('Define Area');\n    if (autoPost) {\n      target.autoPost = { ...(target.autoPost || {}), ...autoPost };\n      const lineIds = new Set((target.edges || []).map(edge => edge.lineId));\n      if (typeof autoPost.dims === 'boolean') this.state.lines.forEach(line => {\n        if (lineIds.has(line.id)) line.dimensionHidden = !autoPost.dims;\n      });\n    }\n    target.type = code;");
 }
+// Canvas right-click: put "Edit Definition..." at the top of the existing canvas
+// menu whenever the cursor is over an area, so right-clicking an area on the
+// drawing edits its classification. Additive - the rest of the menu is untouched.
+if(!source.includes('edit-area-definition')){
+ replaceOnce("    items.push(\n      { action:'make-negative'", "    const areaUnderCursor = this.app.areaWorkflow?.polyAt?.(clientX, clientY);\n    if (areaUnderCursor) items.push(\n      { action:'edit-area-definition',label:'Edit Definition...',icon:'ph-tag',run:() => this.app.areaWorkflow.open(areaUnderCursor, { x:clientX, y:clientY }) },\n      { separator:true }\n    );\n    items.push(\n      { action:'make-negative'");
+}
 const start='<!-- AREA DEFINITION WORKFLOW: generated from src/area-definition.* -->';
 const end='<!-- /AREA DEFINITION WORKFLOW -->';
 if(source.includes(start)){const a=source.indexOf(start),b=source.indexOf(end,a);if(b<0)throw Error('Missing module end');source=source.slice(0,a)+source.slice(b+end.length);}
